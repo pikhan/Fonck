@@ -6,9 +6,12 @@ main {
 }
 
 nav {
+    position: fixed;
     background: #FED9B7;
-    margin-top: 0;
-    top: 0;
+    width: 100%;
+    padding-left: 10%;
+    padding-right: 10%;
+    box-sizing: border-box;
 }
 
 ul {
@@ -37,4 +40,8 @@ li {
     width: 30%;
     margin-right: 80%;
     
+}
+
+.page-container{
+    margin: 10%;
 }
