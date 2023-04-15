@@ -4,6 +4,7 @@
 
 .side-column{
     flex: 1;
+    border-right: black solid;
 }
 
 .main-column{
