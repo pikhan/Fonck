@@ -1,11 +1,43 @@
+main {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+}
+
 nav {
-    background-color: ; 
+    background-color: ;
+    background: #FED9B7;
+    margin-top: 0;
+    top: 0;
+
+
 }
 
 ul {
     list-style-type: none;
+    display: flex;
+    flex-wrap: nowrap;
+    max-width: 1440px;
+    justify-content: center;
+    align-items: center;
+
 }
 
 li {
     display: inline;
+    margin-right: 5%;
+
+}
+
+.logo-item {
+    margin-right: auto;
+    
+
+}
+.logo-img {
+
+    width: 30%;
+    margin-right: 80%;
+    
 }
