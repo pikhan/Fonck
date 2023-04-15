@@ -7,25 +7,37 @@ import Prices from "./Prices"
 
 import {useContext, useState} from "react";
 import { PreferencesContext } from '../../../context/preferencesContext';
+import "./Preferences.css";
 
 
 const Preferences = () => {
     const [,, location, setLocation, boundingTimes, setBoundingTimes, food, setFood, attractions, setAttractions, price, setPrice] = useContext(PreferencesContext);
     
     return(
-        <section>
+        <div className="pref-container">
             <h3>Preferences</h3>
-            <TextField id="outlined-basic" label="Location" variant="standard" />
-            <Rank options={Options.cuisines}/>
-            <Rank options={Options.attractions}/>
-            <Prices/>
+            <section>
+                <div className="pref-field">
+                    <h4 className="sectionTitle">Location:</h4>
+                    <TextField id="outlined-basic" label="Location" variant="standard" />
+                </div>
+                <div className="pref-field">
+                    <h4 className="sectionTitle">Price:</h4>
+                    <Prices/>
+                </div>
+            </section>
+            <section>
+                <h4 className="sectionTitle">Rank Food Categories</h4>
+                <Rank options={Options.cuisines}/>
+            </section>
 
-            {/* <TimePicker
-                label="Controlled picker"
-                value={dayjs('2022-04-17T15:30')}
-                // onChange={(newValue) => setValue(newValue)}
-            /> */}
-        </section>
+            <section>
+                <h4 className="sectionTitle">Rank Attractions</h4>
+                <Rank options={Options.attractions}/>
+            </section>
+            
+
+        </div>
     )
 }
 
