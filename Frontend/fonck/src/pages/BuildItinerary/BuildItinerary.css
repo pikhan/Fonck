@@ -1,0 +1,11 @@
+.pref-and-searchResults-wrapper{
+    display: flex;
+}
+
+.side-column{
+    flex: 1;
+}
+
+.main-column{
+    flex: 2;
+}
