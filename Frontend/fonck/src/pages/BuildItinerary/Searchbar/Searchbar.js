@@ -4,11 +4,13 @@ import dayjs from "dayjs";
 import { TextField } from "@mui/material";
 import { useContext, useState } from "react";
 import { PreferencesContext } from "../../../context/preferencesContext";
+import React from "react"
 import "./Searchbar.css"
 
 
 const today = dayjs();
 const tomorrow = dayjs().add(1, "day");
+
 
 const Searchbar = () => {
   const [searchInput, setSearchInput] = useContext(PreferencesContext);

@@ -4,7 +4,7 @@ import dayjs from 'dayjs';
 import Rank from "./Rank";
 import Options from "./Options"
 import Prices from "./Prices"
-
+import React from "react"
 import {useContext, useState} from "react";
 import { PreferencesContext } from '../../../context/preferencesContext';
 import "./Preferences.css";
