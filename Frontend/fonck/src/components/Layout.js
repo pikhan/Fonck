@@ -5,6 +5,7 @@ import "./Layout.css";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import logo from "../assets/ItineroLogo.png"
 import { PreferencesProvider } from '../context/preferencesContext';
+import { Typography } from "@mui/material";
 
 const Layout = () => {
     return (
@@ -13,8 +14,8 @@ const Layout = () => {
                 <nav className="nav-el">
                         <ul>
                             <li className="logo-item"><Link to="/Home"><img src={logo} alt="Itinero logo" className="logo-img"/></Link></li>
-                            <li><Link to="/BuildItinerary">Create an Itinerary!</Link></li>
-                            <li><Link to="/Profile"><AccountCircleIcon/></Link></li>
+                            <li className="itinerary-item"><Link to="/BuildItinerary"><button  className="itinerary-btn"><Typography variant="h6" >Create Itinerary</Typography></button></Link></li>
+                            <li><Link to="/Profile" ><AccountCircleIcon className="profile-icon" sx={{ fontSize: 60 }} htmlColor="#00AFB9" /></Link></li>
                         </ul>
                 </nav>
 

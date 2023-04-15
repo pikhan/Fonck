@@ -3,6 +3,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { TextField } from '@mui/material';
 import {useContext, useState} from "react";
 import { PreferencesContext } from '../../../context/preferencesContext';
+import React from "react"
 
 const Searchbar = () => {
     const [searchInput, setSearchInput] = useContext(PreferencesContext);
