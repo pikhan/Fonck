@@ -20,6 +20,33 @@ const itineraries = [
   },
 ];
 
+
+// const sendPreferences = async () => {
+//   // get food preferences 
+//   // default for now
+//   const food_preferences = {
+//     "price": "1",
+//     "cuisine": "American",
+//     "diet": "Vegetarian",
+//   }
+
+//   try {
+//     const response = await fetch('http://localhost:5000/food_recommend', {
+//       method: 'POST',
+//       headers: {
+//         'Access-Control-Allow-Origin': '*',
+//         'Content-Type': 'application/json'
+//       },
+//       body: JSON.stringify(food_preferences) 
+//     });
+//     // get recommended food json
+//     // const data = await response.json();
+
+//   } catch (error) {
+//     console.log(error);
+//   }
+// }
+
 const BuildItinerary = () => {
   return (
     <div className="pg-content" id="create-pg">
