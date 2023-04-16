@@ -55,9 +55,8 @@ const Quiz = () => {
       </h1>
 
       {quizCat.map((item, index) => (
-                <QuizCard item={item} num={index}/>
+        <QuizCard item={item} num={index}/>
         ))}
-
     </div>
   );
 };

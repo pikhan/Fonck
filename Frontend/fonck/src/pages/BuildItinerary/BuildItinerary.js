@@ -4,7 +4,7 @@ import "./BuildItinerary.css";
 import React from "react";
 import ItineraryCards from "../../components/itinerary-card/ItineraryCards";
 import cloudbg from "../../assets/createItinerary-bg.png";
-import PopUp from "../../components/Popup";
+import PopUp from "../../components/PopUp";
 
 const itineraries = [
   {

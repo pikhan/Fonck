@@ -13,8 +13,6 @@ import CancelIcon from '@mui/icons-material/Cancel';
 
 const PopUp = () => {
     const [popUp, setPopUp] = useState(true);
-    
-    console.log(popUp);
     return(popUp) ? (
         <div className="pop-up-container">
                 <button className="cancel-btn" onClick={() => setPopUp(false)}> <CancelIcon /> </button>

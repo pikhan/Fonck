@@ -5,7 +5,7 @@ import warnings
 warnings.filterwarnings("ignore")
 
 # Load data
-path = 'put_path_here/Fonck/processed_reviews.csv'
+path = 'Kmeans/processed_reviews.csv'
 data = pd.read_csv(path)
 
 # Data preprocessing

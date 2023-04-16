@@ -50,10 +50,15 @@ export default function RadioGroupRating() {
   return (
     <StyledRating
       name="highlight-selected-only"
-      defaultValue={2}
+      defaultValue={3}
       IconContainerComponent={IconContainer}
       getLabelText={(value) => customIcons[value].label}
       highlightSelectedOnly
+      onChange={(event, newValue) => {
+        console.log(newValue);
+        // pass value to quiz.js
+        
+      }}
     />
   );
 }

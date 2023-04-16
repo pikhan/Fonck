@@ -34,7 +34,6 @@ const MyTest = () => {
       <button onClick={handleAdd}>Add</button>
       <p>Result:</p>
       {result !== 0 && <p>{result}</p>}
-      
     </div>
   );
 };
