@@ -1,9 +1,12 @@
-import { createContext, useState, useEffect} from "react";
+import { createContext, useContext, useState, useEffect} from "react";
 import React from "react";
+import { UXContext } from "./UXContext";
 
 export const PreferencesContext = createContext();
 
 export function PreferencesProvider({children}) {
+    const [,,,,attractions] = useContext(UXContext);
+    const [quizResults] = useContext(UXContext);
     const [dates, setDates] = useState({startDate: "", endDate: ""})
     const [location, setLocation] = useState("")
     const [boundingTimes, setBoundingTimes] = useState({startTime: "", endTime: ""})
@@ -37,9 +40,10 @@ export function PreferencesProvider({children}) {
             const userInput = {
                 dates: dates,
                 location: location,
-                boundingTimes: boundingTimes,
-                food: food,
-                price: price
+                boundingTimes: ['7:00AM','9:00PM'],
+                food: [1, 2, 3, 4, 5],
+                price: price,
+                attractions: attractions,
             }
     
             const response = await fetch('http://localhost:5000/createItinerary', {
@@ -52,13 +56,14 @@ export function PreferencesProvider({children}) {
             });
             // get itinerary data
             const itineraryData = await response.json();
-            console.log(itineraryData);
+            console.log(itineraryData.data);
+
         } catch (error) {
             console.log(error);
         }
         setSearchSubmit(true)
     }
-    
+
     return(
         <PreferencesContext.Provider
             value={[dates, setDates, location, setLocation, boundingTimes, setBoundingTimes, food, setFood, price, setPrice, handleSearchSubmit, searchSubmit]}

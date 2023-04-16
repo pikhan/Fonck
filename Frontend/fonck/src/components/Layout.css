@@ -11,7 +11,7 @@ main {
 nav {
     position: fixed;
     /* background: #FED9B7; */
-    background: white;
+    background: rgba(255,255,255,.8);
     width: 100%;
     padding-left: 10%;
     padding-right: 10%;
