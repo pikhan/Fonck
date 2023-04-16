@@ -26,7 +26,7 @@ def recommend(userdata):
     test_user.loc[0] = userdata
     clust = kmeans.predict(test_user)
     clust = clust_data.loc[clust[0], ].sort_values(ascending=False)
-    return clust.index
+    return list(clust.index)
 
 # ['movie_theater', 'art_gallery', 'clothing_store', 'university', 'bar', 'shopping_mall', 'museum', 'stadium', 'zoo', 'point_of_interest', 'tourist_attraction', 'park']
 
