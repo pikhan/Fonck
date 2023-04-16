@@ -19,9 +19,6 @@ const QuizCard = ({ quizKey}) => {
 };
 
 
-
-
-
 const Quiz = () => {
 
   const [popUp, setPopUp] = useState(true);
@@ -50,7 +47,7 @@ const Quiz = () => {
       })}
 
     </div>
-    <button id="submit-btn" onClick={handleSubmit}>Submit</button>
+    <button id="submit-btn" onClick={() => {handleSubmit(); setPopUp(false);}}>Submit</button>
     </div>
   ): "";
 };
