@@ -253,8 +253,12 @@ from sklearn import metrics
 kmeans = KMeans(n_clusters=20, init='k-means++', random_state=42)
 ourFit=kmeans.fit(Y)
 # Save the KMeans model to a file
-pickle.dump(kmeans, open("kmeansyelp.pkl", "wb"))
-#prediction=kmeans.predict(Y)
+#pickle.dump(kmeans, open("kmeansyelp.pkl", "wb"))
+prediction=kmeans.predict(Y)
+Y['cluster'] = prediction
+clust_data = Y.groupby('cluster').mean()
+clust_data.to_pickle("clust_data.pkl")
+
 #print(metrics.silhouette_score(Y, prediction))
 
 #%%
@@ -359,3 +363,37 @@ target_user_id = nearest_neighbor_user_id
 top_3_places = find_top_3_places(target_user_id, filtered_data)
 print("The user_id with the closest preference in", city, "is:", nearest_neighbor_user_id)
 print("They recommend: ", top_3_places)
+
+#%%
+import googlemaps
+def get_price_level(api_key, place_name, place_address):
+    gmaps = googlemaps.Client(key='AIzaSyDCLemo-47gI1JBA36-_YxMMRtc6ZG1qME')
+    result = gmaps.places(query=f"{place_name} {place_address}")
+
+    if len(result["results"]) > 0:
+        place_info = result["results"][0]
+        if "price_level" in place_info:
+            return place_info["price_level"]
+    return None
+filtered_data = pd.read_csv("filtered_data.csv")
+filtered_data["price_level"] = filtered_data.apply(
+    lambda row: get_price_level('AIzaSyDCLemo-47gI1JBA36-_YxMMRtc6ZG1qME', row["name"], row["address"]), axis=1
+)
+filtered_data.to_csv('filtered_data.csv', index=False)
+
+#%%
+import pandas as pd
+import json
+business_data = []
+
+with open("C:/Users/ibrah/Downloads/yelp_dataset/yelp_dataset/yelp_academic_dataset_business.json", "r", encoding='utf-8') as file:
+    for line in file:
+        business_data.append(json.loads(line))
+
+business_df = pd.DataFrame(business_data)
+business_df['RestaurantsPriceRange2'] = business_df['attributes'].apply(lambda x: x.get('RestaurantsPriceRange2') if x else None)
+filtered_data = pd.read_csv("filtered_data.csv")
+
+merged_filtered_data = filtered_data.merge(business_df[['business_id', 'RestaurantsPriceRange2']], on='business_id', how='left').fillna(2)
+merged_filtered_data = merged_filtered_data.rename(columns={'RestaurantsPriceRange2': 'price'})
+merged_filtered_data.to_csv('merged_filtered_data.csv', index=False)

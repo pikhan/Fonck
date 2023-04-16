@@ -63,8 +63,8 @@ def show_itinerary(suggestions, city, places=3, radius = 40000):
                     addresses.append([choice[ratedChoices[rateKey][0]]['vicinity'], choice[ratedChoices[rateKey][0]]['name']])
                     ratedChoices[rateKey] = ratedChoices[rateKey][1:]
         j += 1
-    addresses = addresses[0:places]
-    
+    addresses = addresses[0:places]    
+
     return addresses
 
 city = 'San Francisco, CA'

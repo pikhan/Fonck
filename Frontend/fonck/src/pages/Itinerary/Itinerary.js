@@ -1,7 +1,7 @@
 import React from 'react';
 import "./Itinerary.css"
 
-
+import { useParams } from "react-router-dom";
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -9,6 +9,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+
 
 function createData(name, calories, fat, carbs, protein) {
   return { name, calories, fat, carbs, protein };
@@ -27,12 +28,15 @@ function BasicTable() {
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
+        <TableRow>
+              <TableCell align="center" colSpan={2}>
+                Day 1 - 10/23/2019
+              </TableCell>
+            
+            </TableRow>
           <TableRow>
-            <TableCell>Dessert (100g serving)</TableCell>
-            <TableCell align="right">Calories</TableCell>
-            <TableCell align="right">Fat&nbsp;(g)</TableCell>
-            <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-            <TableCell align="right">Protein&nbsp;(g)</TableCell>
+            <TableCell>Time</TableCell>
+            <TableCell>Location</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -44,10 +48,7 @@ function BasicTable() {
               <TableCell component="th" scope="row">
                 {row.name}
               </TableCell>
-              <TableCell align="right">{row.calories}</TableCell>
-              <TableCell align="right">{row.fat}</TableCell>
-              <TableCell align="right">{row.carbs}</TableCell>
-              <TableCell align="right">{row.protein}</TableCell>
+              <TableCell>{row.calories}</TableCell>
             </TableRow>
           ))}
         </TableBody>
@@ -64,9 +65,13 @@ const DayCard = () =>{
 const days = [1,2,3]
 
 const Itinerary = () => {
+    const {itineraryID} = useParams();
     return(
-        <div className="itinerary-page">
-            <h1>Itinerary 1</h1>
+        <div className="pg-content" id="itinerary-pg">
+            <div className="itinerary-title-wrapper"><h1>Itinerary {itineraryID}</h1></div>
+            
+
+            <BasicTable/>
 
             
 

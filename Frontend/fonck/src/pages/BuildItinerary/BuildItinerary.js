@@ -1,4 +1,3 @@
-import Searchbar from "./Searchbar/Searchbar";
 import Preferences from "./Preferences/Preferences";
 import "./BuildItinerary.css";
 import React from "react";
@@ -24,8 +23,6 @@ const itineraries = [
 const BuildItinerary = () => {
   return (
     <div className="pg-content" id="create-pg">
-      <div className="form-wrapper">
-        <Searchbar />
         <div className="pref-and-searchResults-wrapper">
           <div className="side-column">
             <Preferences />
@@ -37,7 +34,6 @@ const BuildItinerary = () => {
           </div>
         </div>
       </div>
-    </div>
   );
 };
 
