@@ -6,12 +6,6 @@ app = Flask(__name__)
 cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
 
-@app.route('/')
-@cross_origin()
-def helloWorld():
-  return "Hello, cross-origin-world!"
-
-
 @app.route('/add', methods=['POST'])
 def add():
     num1 = request.json['num1']
@@ -34,9 +28,14 @@ def getActivities():
     itinerary = show_itinerary(result, 'Reno, NV')  # hardcode city
     return itinerary
 
+@app.route('/createItinerary', methods=['POST'])
+def createItinerary():
+    print(request.json)
+    return "success"
+
 # @app.route('/food_recommend', methods=['POST'])
 # def food_recommend():
-    # do nothing for now 
+
 
 if __name__ == '__main__':
     app.run()
