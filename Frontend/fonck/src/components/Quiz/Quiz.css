@@ -21,8 +21,12 @@
 }
 .cancel-btn {
     display: flex;
+    float: right;
     margin-left: auto;
+}
 
+.cancel-btn:hover {
+    color: red;
 }
 
 .pop-up-bg{
