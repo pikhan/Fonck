@@ -3,15 +3,16 @@ import { useContext, useState } from "react";
 import { UXContext } from "../../context/UXContext";
 import RadioGroupRating from "./Rating";
 
-
-
 import "./Quiz.css";
 import CancelIcon from '@mui/icons-material/Cancel';
+import { capitalize } from "@mui/material";
+
+
 
 const QuizCard = ({ quizKey}) => {
   return (
     <>
-      <h3>Rate your average experience at a {quizKey}</h3>
+      <h3>{quizKey}</h3>
     <RadioGroupRating quizKey={quizKey}/>
     </>
   );
@@ -39,8 +40,12 @@ const Quiz = () => {
         Hello! You seem new here...To build you a personalized itinerary, please
         let us know more about you!
       </h1>
+      <h2>Rate your experience at each of the following:&nbsp;</h2>
+      <br></br>
 
       {Object.keys(quizResults).map((key) => {
+        // title case for key
+        key = capitalize(key);
         return <QuizCard quizKey={key}/>;
       })}
 

@@ -49,12 +49,33 @@ IconContainer.propTypes = {
   value: PropTypes.number.isRequired,
 };
 
+const sendRatings = async () => {
+  // get quiz results from context
+  const [quizResults] = useContext(UXContext);
+  try {
+    const response = await fetch('http://localhost:5000/recommend', {
+      method: 'POST',
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(quizResults) 
+    });
+    // get recommended itineraries json
+    const data = await response.json();
+    console.log(data);
+    // set recommended itineraries
+    // setItineraries(data.itineraries); //???
+
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export default function RadioGroupRating({quizKey, saveQuizResults}) {
 
   const [,setQuizResults] = useContext(UXContext);
   return (
-
-
 
     <StyledRating
       name="highlight-selected-only"
@@ -62,7 +83,6 @@ export default function RadioGroupRating({quizKey, saveQuizResults}) {
       IconContainerComponent={IconContainer}
       getLabelText={(value) => customIcons[value].label}
       highlightSelectedOnly
-
       onChange={(event, newValue) =>
         setQuizResults((prevState) => ({
           ...prevState,

@@ -25,7 +25,7 @@ const MyTest = () => {
       console.log(error);
     }
   }
-
+ 
   return (
     <div>
       <h1>Add Two Numbers</h1>
