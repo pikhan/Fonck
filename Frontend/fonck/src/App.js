@@ -18,7 +18,7 @@ function App() {
               <Route path="BuildItinerary" element={<BuildItinerary/>}/> 
               <Route path="Profile" element={<Profile/>}/>
               <Route path="MyTest" element={<MyTest/>}/>
-              <Route path="ItineraryOption/:itineraryID" element={<Itinerary/>}/>
+              <Route path="ItineraryOption" element={<Itinerary/>}/>
             </Route>
         </Routes>
     </div>

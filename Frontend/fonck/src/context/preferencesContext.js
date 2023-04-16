@@ -11,7 +11,7 @@ export function PreferencesProvider({children}) {
     const [location, setLocation] = useState("")
     const [boundingTimes, setBoundingTimes] = useState({startTime: "", endTime: ""})
     const [food, setFood] = useState({American: "", Asian: "", Mediterranean: "", Latin: "", European: ""})
-    const [price, setPrice] = useState("")
+    var [price, setPrice] = useState("")
     const [searchSubmit, setSearchSubmit] = useState(false)
 
     useEffect(() => {
