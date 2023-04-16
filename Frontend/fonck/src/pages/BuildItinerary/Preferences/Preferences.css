@@ -1,3 +1,4 @@
+
 .sectionTitle {
     text-align: left;
     color: gray;
@@ -16,4 +17,10 @@ section {
     /* display: flex; */
     column-count: 2;
     /* column-gap: 5px; */
+}
+
+.time-pickers {
+    display: flex;
+    flex-direction: row;
+
 }
