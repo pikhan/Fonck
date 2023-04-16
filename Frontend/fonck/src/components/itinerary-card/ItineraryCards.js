@@ -1,7 +1,6 @@
 import EventNoteIcon from '@mui/icons-material/EventNote';
 import "./ItineraryCards.css"
-
-
+import React from "react";
 
 const ItineraryCard = ({cardInfo, num}) => {
 
