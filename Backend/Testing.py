@@ -257,3 +257,103 @@ ourFit=kmeans.fit(Y)
 
 #%%
 print(ourFit.cluster_centers_)
+
+#%%
+import pandas as pd
+from sklearn.preprocessing import StandardScaler
+from sklearn.neighbors import BallTree
+
+# Load the data
+data = pd.read_csv('yelp_food.csv')
+# Load the filtered_data.csv
+filtered_data = pd.read_csv('filtered_data.csv')
+
+# Extract user location data by grouping by user_id and selecting the first city for each user
+user_location_data = filtered_data.groupby('user_id')['city'].first().reset_index()
+
+# Merge user location data with the grouped data
+merged_data = data.merge(user_location_data, on='user_id')
+# Save the merged data into a new .csv file
+merged_data.to_csv('merged_data.csv', index=False)
+
+#%%
+data = pd.read_csv('merged_data.csv')
+# Extract the feature columns (ratings for each category group)
+feature_columns = ['american', 'asian', 'mediterranean', 'latin', 'european']
+X = data[feature_columns]
+
+# Scale the features
+scaler = StandardScaler()
+X_scaled = scaler.fit_transform(X)
+
+# Train the Ball Tree model
+ball_tree = BallTree(X_scaled, metric='euclidean')
+
+# Save the Ball Tree, the data, and the scaler for future use
+import pickle
+pickle.dump(ball_tree, open('ball_tree.pkl', 'wb'))
+data.to_pickle('data.pkl')
+pickle.dump(scaler, open('scaler.pkl', 'wb'))
+
+#%%
+import pandas as pd
+import pickle
+import numpy as np
+
+def recommend_user(city, target_user_ratings):
+    # Load the data and the scaler
+    data = pd.read_pickle('data.pkl')
+    scaler = pickle.load(open('scaler.pkl', 'rb'))
+    
+    # Filter the data to only include users from the desired city
+    filtered_data = data[data['city'] == city]
+    
+    # Check if there are any samples in the filtered data
+    if filtered_data.empty:
+        return "No users found in the specified city."
+    
+    X_filtered = filtered_data[feature_columns].to_numpy()
+    
+    # Scale the filtered data and the target user's ratings
+    X_scaled = scaler.transform(X_filtered)
+    target_user_scaled = scaler.transform([target_user_ratings])
+    
+    # Compute the Euclidean distances between the target user and the filtered data
+    distances = np.sqrt(np.sum((X_scaled - target_user_scaled)**2, axis=1))
+    
+    # Find the index of the nearest neighbor
+    nearest_neighbor_index = np.argmin(distances)
+    
+    # Get the nearest neighbor's user_id
+    nearest_neighbor_user_id = filtered_data.iloc[nearest_neighbor_index]['user_id']
+    
+    return nearest_neighbor_user_id
+
+
+def find_top_3_places(user_id, data):
+    # Filter the dataset to only include rows with the given user_id
+    user_data = data[data['user_id'] == user_id]
+    
+    # Find the top 3 highest-rated places using nlargest()
+    top_3_places = user_data.nlargest(3, 'stars')
+    
+    return top_3_places
+
+# Load the filtered_data.csv
+filtered_data = pd.read_csv('filtered_data.csv')
+
+
+
+
+
+
+city = 'Reno'
+target_user_ratings = [2,4,3,3,2]  # Replace with the actual ratings of the target user
+nearest_neighbor_user_id = recommend_user(city, target_user_ratings)
+# Define the target user_id
+target_user_id = nearest_neighbor_user_id
+
+# Find the top 3 highest-rated places for the given user_id at runtime
+top_3_places = find_top_3_places(target_user_id, filtered_data)
+print("The user_id with the closest preference in", city, "is:", nearest_neighbor_user_id)
+print("They recommend: ", top_3_places['name'])
