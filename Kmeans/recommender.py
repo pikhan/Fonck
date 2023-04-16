@@ -153,7 +153,7 @@ warnings.filterwarnings("ignore")
 from sklearn import metrics
 
 # Load data
-path = 'C:/Users/Johanson Onyegbula/Documents/Masters in NRES/Spring 2023/Hackathon/Fonck/processed_reviews.csv'
+path = 'C:/Users/Johanson Onyegbula/Documents/Masters in NRES/Spring 2023/Hackathon/Fonck/Kmeans/processed_reviews.csv'
 data = pd.read_csv(path)
 
 # Data preprocessing
@@ -192,13 +192,14 @@ plt.show()
 
 # choose 6 clusters
 kmeans = KMeans(n_clusters=6, init='k-means++', random_state=42)
-kmeans.fit(Y)
+ourFit = kmeans.fit(Y)
 pred = kmeans.predict(Y)
 Y['cluster'] = pred
 
 # assess cluster groups
 clust_data = Y.groupby('cluster').mean()
 
+# function to return ranked location types for user
 def recommend(userdata):
     test_user = Y.loc[0:1,]
     test_user.drop(1, inplace = True)
@@ -206,28 +207,45 @@ def recommend(userdata):
     test_user.loc[0] = userdata
     clust = kmeans.predict(test_user)
     clust = clust_data.loc[clust[0], ].sort_values(ascending=False)
-    return clust[0:3].index
+    return clust.index
 
 # ['movie_theater', 'art_gallery', 'clothing_store', 'university', 'bar', 'shopping_mall', 'museum', 'stadium', 'zoo', 'point_of_interest', 'tourist_attraction', 'park']
 
 #recommend for a user rating  who rates park as 4, and shopping mall as 5
-recommend([2.5, 2.5, 2.5, 2.5, 2.5, 5, 2.5, 2.5, 2.5, 2.5, 2.5, 4])
+recommend([3, 3, 3, 3, 3, 5, 3, 3, 3, 3, 3, 4])
 #recommend for a user rating  who rates movie theater, stadium and art gallery as 5 each
-recommend([5, 5, 2.5, 2.5, 2.5, 2.5, 2.5, 5, 2.5, 2.5, 2.5, 2.5])[0:2]
+rankings = [5, 5, 3, 3, 3, 3, 3, 5, 3, 3, 3, 3]
+suggestions = recommend(rankings)
 
-def show_itinerary(suggestions, city, radius = 40000):
+# function to plan itinerary of specific places from ranked location types
+def show_itinerary(suggestions, city, places=3, radius = 40000):
     coords = gmaps.places(query=city)['results'][0]['geometry']['location']
     location = str(coords['lat']) + "," + str(coords['lng'])
     # there are 3 suggested types, and the choices return multiple places for each below
-    choice1 = gmaps.places_nearby(location, radius, type=suggestions[0])
-    choice2 = gmaps.places_nearby(location, radius, type=suggestions[1])
-    choice3 = gmaps.places_nearby(location, radius, type=suggestions[2])
+    choices = []
+    choices.append(gmaps.places_nearby(location, radius, type=suggestions[0]))
+    choices.append(gmaps.places_nearby(location, radius, type=suggestions[1]))
+    choices.append(gmaps.places_nearby(location, radius, type=suggestions[2]))
+    addresses = []
+    itinerary = "From "
+    
+    for choice in choices:
+        if 'results' in choice and len(choice['results']) > 0:
+            choice = choice['results']
+            ratings = [choice[i]['rating'] for i in range(len(choice)) if 'rating' in choice[i]]
+            maxId = np.argsort(np.array(ratings))[0]
+            addresses.append([choice[maxId]['vicinity'], choice[maxId]['name']])
     
     naddress = len(addresses) - 1
     for i in range(naddress):
-        print(addresses[i], ':\t', end=' ')
-        dirxn = gmaps.directions(addresses[i], addresses[i+1], mode="driving", departure_time=datetime.datetime.now())
-        print(dirxn[0]['legs'][0]['duration']['text'], "drive:\t", end=' ')
-    print(addresses[naddress])
+        itinerary += addresses[i][0] + " (" + addresses[i][1] + "):\t "
+        dirxn = gmaps.directions(addresses[i][0], addresses[i+1][0], mode="driving", departure_time=datetime.datetime.now())
+        itinerary += dirxn[0]['legs'][0]['duration']['text'] + " drive to:\t "
+    itinerary += addresses[naddress][0] + " (" + addresses[naddress][1] + ")"
+    
+    return itinerary
 
+city = 'San Francisco'
+itinerary = show_itinerary(suggestions, city)
+print(itinerary)
 
