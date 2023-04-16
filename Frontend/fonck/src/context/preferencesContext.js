@@ -9,6 +9,12 @@ export function PreferencesProvider({children}) {
     const [boundingTimes, setBoundingTimes] = useState({startTime: "", endTime: ""})
     const [food, setFood] = useState({American: "", Asian: "", Mediterranean: "", Latin: "", European: ""})
     const [price, setPrice] = useState("")
+    const [searchSubmit, setSearchSubmit] = useState(false)
+
+    const handleSearchSubmit = () => {
+        setSearchSubmit(true)
+        console.log("submitted search btn")
+    }
 
 
     useEffect(() => {
@@ -32,7 +38,7 @@ export function PreferencesProvider({children}) {
     }, [price]);
     return(
         <PreferencesContext.Provider
-            value={[dates, setDates, location, setLocation, boundingTimes, setBoundingTimes, food, setFood, price, setPrice]}
+            value={[dates, setDates, location, setLocation, boundingTimes, setBoundingTimes, food, setFood, price, setPrice, handleSearchSubmit]}
         >
 
             {children}

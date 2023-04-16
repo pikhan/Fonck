@@ -1,5 +1,7 @@
 .pref-and-searchResults-wrapper{
     display: flex;
+    background-color: rgba(253, 252, 252, .75);
+    border-radius: 25px;
 }
 
 .side-column{
@@ -27,9 +29,4 @@
 
 .pg-content{
     padding: 10%
-}
-
-.form-wrapper{
-    background-color: rgba(253, 252, 252, .75);
-    border-radius: 25px;
 }
