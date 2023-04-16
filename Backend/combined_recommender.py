@@ -149,8 +149,6 @@ def get_restaurants_from_google_maps(suggestions, city, price_pref, count=3, rec
                 })
                 recommended_places.add(place_id)  # Add the place_id to the recommended_places set
                 timeIndex +=1
-                if timeIndex == 2:
-                    timeIndex=0
 
     return results, timeIndex
 
@@ -184,8 +182,6 @@ def get_attractions_from_google_maps(suggestions, city, count=3, recommended_pla
             })
             recommended_places.add(place_id)  # Add the place_id to the recommended_places set
             timeIndex +=1
-            if timeIndex == 2:
-                timeIndex=0
 
     return results, timeIndex
 
@@ -230,7 +226,8 @@ def find_top_n_places(user_id, data, n, price_pref,recommended_places):
 
 
 def generate_itinerary(dates, bounding_times, price_pref, user_food_prefs, user_attraction_prefs, city):
-    timeIndex=0
+    timeIndexFood=0
+    timeIndexAttractions=0
     start_times = compute_evenly_distributed_times(bounding_times[0],bounding_times[1],6)
     food_times = [start_times[0],start_times[2],start_times[5]]
     attraction_times = [start_times[1],start_times[3],start_times[4]]
@@ -254,11 +251,9 @@ def generate_itinerary(dates, bounding_times, price_pref, user_food_prefs, user_
                 itinerary[date].append({
                     'name': place['name'],
                     'address': place['address'],
-                    'time': food_times[timeIndex]
+                    'time': food_times[timeIndexFood]
                 })
-                timeIndex += 1
-                if timeIndex == 2:
-                    timeIndex = 0
+                timeIndexFood += 1
 
                 n_restaurants -= 1
                 if n_restaurants <= 0:
@@ -272,14 +267,16 @@ def generate_itinerary(dates, bounding_times, price_pref, user_food_prefs, user_
             test_user = pd.Series(user_food_prefs, index=clust_data.columns)
             clust = kmeans.predict(test_user.values.reshape(1, -1))
             top_3_categories = clust_data.loc[clust[0], :].sort_values(ascending=False)[0:3].index
-            additional_restaurants, timeIndex = get_restaurants_from_google_maps(top_3_categories, city, price_pref, n_restaurants,recommended_places, food_times, timeIndex)
+            additional_restaurants, timeIndexFood = get_restaurants_from_google_maps(top_3_categories, city, price_pref, n_restaurants,recommended_places, food_times, timeIndexFood)
             itinerary[date].extend(additional_restaurants)
         
         ourSuggestions=recommendAttractions(user_attraction_prefs)
         #ourAttractions=show_itineraryAttractions(ourSuggestions,city,3,40000,recommended_places)
         #ourFormattedAttractions=formatAttractions(ourAttractions,attraction_times,timeIndex)
-        ourLameAttractions, timeIndex=get_attractions_from_google_maps(ourSuggestions,city,3,recommended_places,attraction_times,timeIndex)
+        ourLameAttractions, timeIndexAttractions=get_attractions_from_google_maps(ourSuggestions,city,3,recommended_places,attraction_times,timeIndexAttractions)
         itinerary[date].extend(ourLameAttractions)
+        timeIndexFood = 0
+        timeIndexAttractions = 0
 
     return itinerary
 
