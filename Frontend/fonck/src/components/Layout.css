@@ -10,7 +10,8 @@ main {
 
 nav {
     position: fixed;
-    background: #FED9B7;
+    /* background: #FED9B7; */
+    background: white;
     width: 100%;
     padding-left: 10%;
     padding-right: 10%;
@@ -47,7 +48,12 @@ li {
 }
 
 .page-container{
-    margin: 10%;
+    position:absolute;
+    padding: 0;
+    /* margin: 10%; */
+    left: 0;
+    right: 0;
+
 }
 
 .itinerary-item {
@@ -55,11 +61,11 @@ li {
 }
 
 .itinerary-btn {
-    border-radius: 5px;
+    border-radius: 25px;
     border: none;
     background: #00AFB9;
     color: white;
-    padding: 8px 10px;
+    padding: 8px 20px;
     font-family: 'Inter';
     font-weight: bold;    
     box-shadow: 5px 7px 0px #0081A7;
