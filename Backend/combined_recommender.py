@@ -7,6 +7,7 @@ from sklearn.neighbors import BallTree
 import googlemaps
 import json
 import warnings
+import openpyxl
 warnings.filterwarnings("ignore")
 
 gmaps = googlemaps.Client(key='AIzaSyDCLemo-47gI1JBA36-_YxMMRtc6ZG1qME')
@@ -282,25 +283,64 @@ def generate_itinerary(dates, bounding_times, price_pref, user_food_prefs, user_
 
 
 # Main function to generate the itinerary
-# def main():
-#     start_date = datetime.strptime("2023-05-01", "%Y-%m-%d")
-#     end_date = datetime.strptime("2023-05-05", "%Y-%m-%d")
-#     bounding_times = ["7:00AM", "9:00PM"]
-#     price_pref = 2
-#     user_food_prefs = [1, 4, 3, 5, 1]
-#     user_attraction_prefs = [2, 3, 4, 1, 3, 3, 5, 2, 1, 3, 2, 2]
-#     city = "Reno"
+def main():
+    start_date = datetime.strptime("2023-05-01", "%Y-%m-%d")
+    end_date = datetime.strptime("2023-05-05", "%Y-%m-%d")
+    bounding_times = ["7:00AM", "9:00PM"]
+    price_pref = 2
+    user_food_prefs = [1, 4, 3, 5, 1]
+    user_attraction_prefs = [2, 3, 4, 1, 3, 3, 5, 2, 1, 3, 2, 2]
+    city = "Reno"
 
-#     # Generate dates list
-#     dates = [(start_date + timedelta(days=i)).strftime("%Y-%m-%d") for i in range((end_date - start_date).days + 1)]
+    # Generate dates list
+    dates = [(start_date + timedelta(days=i)).strftime("%Y-%m-%d") for i in range((end_date - start_date).days + 1)]
 
-#     itinerary = generate_itinerary(dates, bounding_times, price_pref, user_food_prefs, user_attraction_prefs, city)
+    itinerary = generate_itinerary(dates, bounding_times, price_pref, user_food_prefs, user_attraction_prefs, city)
 
-#     # Save itinerary to a JSON file
-#     with open("itinerary.json", "w", encoding='utf-8') as f:
-#         json.dump(itinerary, f, ensure_ascii=False, indent=4)
+    # Save itinerary to a JSON file
+    with open("itinerary.json", "w", encoding='utf-8') as f:
+        json.dump(itinerary, f, ensure_ascii=False, indent=4)
+    # Save to a csv file
+    # df = pd.read_json("itinerary.json")
+    # df.to_csv("itinerary.csv")
+        # Load the JSON data
+    # with open('itinerary.json', 'r') as file:
+    #     data = json.load(file)
+    # # Create an empty DataFrame
+    # df = pd.DataFrame(columns=['Date', 'Time', 'Location', 'Address'])
+
+    # # Iterate through the JSON data and append to the DataFrame
+    # for date, locations in data.items():
+    #     for location in locations:
+    #         df = df.append({
+    #             'Date': date,
+    #             'Time': location['time'],
+    #             'Location': location['name'],
+    #             'Address': location['address']
+    #         }, ignore_index=True)
+
+    # # Sort DataFrame by Date and Time
+    # df.sort_values(['Date', 'Time'], inplace=True)
+
+    # # Create a new DataFrame to store the reshaped data
+    # reshaped_df = pd.DataFrame(columns=['Date', 'Time', 'Location', 'Address'])
+
+    # # Iterate through the sorted DataFrame and reshape it
+    # for date, group in df.groupby('Date'):
+    #     reshaped_df = reshaped_df.append({'Date': date}, ignore_index=True)
+    #     reshaped_df = reshaped_df.append(group.drop('Date', axis=1), ignore_index=True)
+    #     reshaped_df = reshaped_df.append(pd.Series(), ignore_index=True)
+
+    # # Save the reshaped DataFrame to an Excel file
+    # reshaped_df.to_excel('itinerary.xlsx', index=False, engine='openpyxl')
+    # Create the JavaScript content
+    js_content = f'const myData = {itinerary};'
+
+# Write the content to a new JS file
+    with open('../Frontend/fonck/src/pages/Itinerary/itineraryData.js', 'w',encoding='utf-8') as js_file:
+        js_file.write(js_content)
 
 
-# if __name__ == "__main__":
-#     main()
+if __name__ == "__main__":
+    main()
 
