@@ -5,7 +5,7 @@ import warnings
 warnings.filterwarnings("ignore")
 
 # Load data
-path = 'put_path_here/Fonck/processed_reviews.csv'
+path = 'Kmeans/processed_reviews.csv'
 data = pd.read_csv(path)
 
 # Data preprocessing
@@ -30,20 +30,20 @@ wcss
 s_score
 
 # Plot the elbow graph
-plt.figure(figsize=(12,6))
-plt.plot(range(2, 20), wcss, marker='o', c='orchid')
-plt.title('The Elbow Method')
-plt.xlabel('Number of Clusters')
-plt.ylabel('WCSS')
-plt.show()
+# plt.figure(figsize=(12,6))
+# plt.plot(range(2, 20), wcss, marker='o', c='orchid')
+# plt.title('The Elbow Method')
+# plt.xlabel('Number of Clusters')
+# plt.ylabel('WCSS')
+# plt.show()
 
 
 # Plot the silhouette score
-plt.plot(range(2, 20), s_score, marker='o', c='coral')
-plt.title('The Silhouette Score')
-plt.xlabel('Number of Clusters')
-plt.ylabel('Silhouette Score')
-plt.show()
+# plt.plot(range(2, 20), s_score, marker='o', c='coral')
+# plt.title('The Silhouette Score')
+# plt.xlabel('Number of Clusters')
+# plt.ylabel('Silhouette Score')
+# plt.show()
 
 # choose 6 clusters
 kmeans = KMeans(n_clusters=6, init='k-means++', random_state=42)
@@ -61,6 +61,7 @@ def recommend(userdata):
     test_user.loc[0] = userdata
     clust = kmeans.predict(test_user)
     clust = clust_data.loc[clust[0], ].sort_values(ascending=False)
+    print(clust[0:3].index)
     return clust[0:3].index
 
 # ['movie_theater', 'art_gallery', 'clothing_store', 'university', 'bar', 'shopping_mall', 'museum', 'stadium', 'zoo', 'point_of_interest', 'tourist_attraction', 'park']

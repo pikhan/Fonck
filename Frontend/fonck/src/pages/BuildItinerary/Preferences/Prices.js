@@ -5,18 +5,29 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 
+import {useContext, useState} from "react";
+import { PreferencesContext } from '../../../context/preferencesContext';
+
 const Prices= () => {
+  const [,,,,,,,, price, setPrice] = useContext(PreferencesContext);
+  const handleChange = (event) => {
+    setPrice(event.target.value);
+  };
+
   return (
     <FormControl>
-      <FormLabel id="demo-row-radio-buttons-group-label">Price</FormLabel>
       <RadioGroup
         row
-        aria-labelledby="demo-row-radio-buttons-group-label"
-        name="row-radio-buttons-group"
+        aria-labelledby="price-preference"
+        name="price-preference"
+        value={price}
+        onChange={handleChange}
+
       >
         <FormControlLabel value="$" control={<Radio />} label="$" />
         <FormControlLabel value="$$" control={<Radio />} label="$$" />
         <FormControlLabel value="$$$" control={<Radio />} label="$$$" />
+        <FormControlLabel value="$$$$" control={<Radio />} label="$$$$" />
       </RadioGroup>
     </FormControl>
   );
