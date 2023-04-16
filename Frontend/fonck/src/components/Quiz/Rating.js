@@ -8,6 +8,9 @@ import SentimentSatisfiedIcon from '@mui/icons-material/SentimentSatisfied';
 import SentimentSatisfiedAltIcon from '@mui/icons-material/SentimentSatisfiedAltOutlined';
 import SentimentVerySatisfiedIcon from '@mui/icons-material/SentimentVerySatisfied';
 
+import { useContext, useState } from "react";
+import { UXContext } from "../../context/UXContext";
+
 const StyledRating = styled(Rating)(({ theme }) => ({
   '& .MuiRating-iconEmpty .MuiSvgIcon-root': {
     color: theme.palette.action.disabled,
@@ -46,14 +49,46 @@ IconContainer.propTypes = {
   value: PropTypes.number.isRequired,
 };
 
-export default function RadioGroupRating() {
+const sendRatings = async () => {
+  // get quiz results from context
+  const [quizResults] = useContext(UXContext);
+  try {
+    const response = await fetch('http://localhost:5000/recommend', {
+      method: 'POST',
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(quizResults) 
+    });
+    // get recommended itineraries json
+    const data = await response.json();
+    console.log(data);
+    // set recommended itineraries
+    // setItineraries(data.itineraries); //???
+
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export default function RadioGroupRating({quizKey, saveQuizResults}) {
+
+  const [,setQuizResults] = useContext(UXContext);
   return (
+
     <StyledRating
       name="highlight-selected-only"
-      defaultValue={2}
+      defaultValue={3}
       IconContainerComponent={IconContainer}
       getLabelText={(value) => customIcons[value].label}
       highlightSelectedOnly
+      onChange={(event, newValue) =>
+        setQuizResults((prevState) => ({
+          ...prevState,
+          [quizKey]: newValue,
+        }))
+      }
     />
   );
 }

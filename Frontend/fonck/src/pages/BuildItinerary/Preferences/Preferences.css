@@ -1,26 +1,45 @@
-
 .sectionTitle {
-    text-align: left;
-    color: gray;
+  text-align: left;
+  color: gray;
 }
 
 section {
-    border-bottom: gray solid;
+  border-bottom: gray solid;
+  padding-top: 20px;
+  padding-bottom: 20px;
 }
 
-.pref-container{
-    padding: 20px;
-    padding-left: 50px;
-}
-
-.pref-field{
-    /* display: flex; */
-    column-count: 2;
-    /* column-gap: 5px; */
+.pref-container {
+  padding: 20px;
+  padding-left: 50px;
 }
 
 .time-pickers {
-    display: flex;
-    flex-direction: row;
+  display: flex;
+  flex-direction: row;
+}
 
+.Searchbar-item {
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+#search-btn {
+  margin-top: 20px;
+  background: #f07167;
+  color: white;
+  border: none;
+  border-radius: 25px;
+  box-shadow: 5px 7px 0px #c9574f;
+  font-size: 1em;
+}
+
+#search-btn h1 {
+  padding: 0;
+  margin: 0;
+}
+
+#search-btn:hover {
+  background: white;
+  color: #f07167;
 }

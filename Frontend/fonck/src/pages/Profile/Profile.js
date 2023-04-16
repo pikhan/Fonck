@@ -1,13 +1,30 @@
 import React from 'react';
-import Quiz from "../BuildItinerary/Quiz/Quiz";
+import "./Profile.css"
+import { Box, Typography } from "@mui/material";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+
 
 const Profile = () => {
     return(
-        <div>Profile
-
-            <Quiz/>
-        </div>
-    )
+        <Box className="bg-container" id="create-pg">
+            <Box className="profile-container">
+                <Box className="profile-info">
+                    <Box sx={{}}>
+                        <Typography variant="h1" sx={{fontSize: '50px'}}> Hello World</Typography>
+                        <AccountCircleIcon className="profile-icon" sx={{fontSize:''}}/>
+                    </Box>
+                    <Typography> </Typography>
+                    <Typography> </Typography>
+                    
+                </Box>
+                <div className="inner-profile-container">
+                    <Box className="user-pref"></Box>
+                    <Box className="user-itineraries"></Box>
+                </div>
+            </Box>
+        </Box>
+        
+    );
 };
 
 export default Profile;

@@ -1,0 +1,58 @@
+
+
+.pop-up-container {
+    z-index: 4;
+    background: #FDFCDC;
+    position: fixed;
+    top: 50%;
+    left:50%;
+    transform: translate(-50%,-50%);
+    width: 130vh;
+    height: 85%;
+    padding: 10px;
+    overflow: scroll;
+    border-radius: 25px;
+    box-shadow: 10px 10px 0px #FED9B7;
+
+
+}
+.pop-up-container::-webkit-scrollbar {
+    display: none;
+}
+.cancel-btn {
+    display: flex;
+    float: right;
+    margin-left: auto;
+}
+
+.cancel-btn:hover {
+    color: red;
+}
+
+.pop-up-bg{
+    position: fixed;
+    z-index: 4;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(255, 255, 255, .75);
+}
+
+
+#submit-btn {
+    border-radius: 25px;
+    border: none;
+    background: #00AFB9;
+    color: white;
+    padding: 8px 20px;
+    font-family: 'Inter';
+    font-weight: bold;
+    font-size: 50px;    
+    box-shadow: 5px 7px 0px #0081A7;
+    margin: 30px;
+}
+
+#submit-btn:hover {
+    color: #00AFB9;
+    background: white;
+}

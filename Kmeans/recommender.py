@@ -1,204 +1,24 @@
 # install and import googlemaps api
 #pip install googlemaps
 import googlemaps
-gmaps = googlemaps.Client(key='AIzaSyDCLemo-47gI1JBA36-_YxMMRtc6ZG1qME')
-
-# geocode an address
-address = '1520 Valley Road, Reno, NV'
-geocode_result = gmaps.geocode(address)
-# Extract latitude and longitude
-lat = geocode_result[0]['geometry']['location']['lat']
-lng = geocode_result[0]['geometry']['location']['lng']
-
-# search for restaurants 1km about address
-location = str(lat) + "," + str(lng) 
-radius = 1000
-places_result = gmaps.places_nearby(location=location, radius=radius, type='restaurant')
-places_result['results'][0] #found 20 results
-
-# calculates distance between 2 addresses
-import datetime
-directions_result = gmaps.directions(address, places_result['results'][0]['vicinity'], mode="transit", departure_time=datetime.datetime.now())
-directions_result[0]['legs'][0]['duration']['text']
-
-all_places = gmaps.places_nearby(location="San Francisco, CA", type='restaurant')
-all_places = gmaps.places()
-
-
-import requests
-import json
-
-yelp_api_key = "tVZIbPkyz21fZXG6u2LAh8n7me8NRVNMBf_WcKN2BK18y5phm-p5mARRploxSK-RO3VAo9n9fjnSF6601yJY_AF397eGeuKz4vvAIt6LtVj5HpOToW2DW7STnVE6ZHYx" 
-
-# Base URL for Yelp Fusion API
-yelp_base_url = "https://api.yelp.com/v3"
-
-def search_yelp_businesses(location, term=None, categories=None, limit=50, offset=0):
-    url = f"{yelp_base_url}/businesses/search"
-    headers = {
-        "Authorization": f"Bearer {yelp_api_key}"
-    }
-    params = {
-        "location": location,
-        "limit": limit,
-        "offset": offset,
-    }
-    if term:
-        params['term'] = term
-    if categories:
-        params["categories"] = categories
-
-    response = requests.get(url, headers=headers, params=params)
-    return response.json()
-
-def get_yelp_business_reviews(business_id):
-    url = f"{yelp_base_url}/businesses/{business_id}/reviews"
-    headers = {
-        "Authorization": f"Bearer {yelp_api_key}"
-    }
-    response = requests.get(url, headers=headers)
-    return response.json()
-
-from collections import defaultdict
-
-# Define the location and search term for the search
-location = 'San Francisco, CA'
-term = 'restaurants'
-
-# Send an HTTP GET request to the API and get the response
-response = search_yelp_businesses(location, term)
-
-# Parse the JSON response and print the names of the businesses
-businesses = json.loads(response.text)['businesses']
-for business in businesses:
-    print(business['name'])
-
-import pandas as pd
-import json
-json_data = open("C:/Users/Johanson Onyegbula/Documents/Masters in NRES/Spring 2023/Hackathon/Fonck/all_atl_reviews.json")
-data1 = json.load(json_data)
-n = len(data1)
-myplaces = dict()
-df = pd.DataFrame(columns = ['User_ID', 'Username', 'Rating', 'Location_Type'])
-
-# convert json data to dataframe for each user's review
-for i in range(n):
-    mydata = data1[i]
-    pl_name = mydata['activity_name']
-    if pl_name not in myplaces:
-        place_detail = gmaps.places(query = pl_name)
-        myrating, place_type, totalrating = None, None, None
-        if 'results' and (len(place_detail['results']) > 0) in place_detail:
-            place_detail = place_detail['results'][0]
-            if 'rating' in place_detail:
-                myrating = place_detail['rating']
-            if 'types' in place_detail:
-                place_type = place_detail['types']
-            if 'user_ratings_total' in place_detail:
-                totalrating = place_detail['user_ratings_total']
-        myplaces[pl_name] = [myrating, place_type, totalrating]
-    else:
-        place_type = myplaces[pl_name][1]
-    df.loc[i] = [mydata['userid'], mydata['username'], mydata['star_rating'], place_type]
-
-# extract all unique place types from data frame
-alltypes = set()
-for i in range(n):
-    mytype = df.iloc[i, 3]
-    if mytype and mytype[0] not in alltypes:
-        alltypes.add(mytype[0])
-
-# get the specific types from the location type
-df['Type'] = df['Location_Type']
-for i in range(n):
-    val = df.iloc[i, 4]
-    if val:
-        val = val[0]
-    df.at[i, 'Type'] = val
-
-# remove unwanted types
-df.groupby(['Type']).count()
-mytypes = alltypes.copy()
-mytypes.remove('travel_agency')
-
-df1 = df.copy()
-
-# give an average rating to each place by default
-for place in mytypes:
-    df[place] = 3
-
-#create categories for each row and assign rating to the relevant type
-for i in range(n):
-    rate = df.iloc[i, 2]
-    mytype = df.iloc[i, 4]
-    if rate and mytype in mytypes:
-        df.at[i, mytype] = rate
-
-# drop unchosen rows
-for i in range(n-1, -1, -1):
-    mytype = df.iloc[i, 4]
-    if mytype not in mytypes:
-        df.drop(i, inplace=True)
-
-df.to_csv("C:/Users/Johanson Onyegbula/Documents/Masters in NRES/Spring 2023/Hackathon/Fonck/processed_reviews.csv", index=False)
-
-
-
-import numpy as np, pandas as pd, seaborn as sns, matplotlib.pyplot as plt
-from sklearn.cluster import KMeans
+import pickle
+import numpy as np
 # ignore warnings
 import warnings
 warnings.filterwarnings("ignore")
 # For silhouette score
-from sklearn import metrics
 
-# Load data
-path = 'C:/Users/Johanson Onyegbula/Documents/Masters in NRES/Spring 2023/Hackathon/Fonck/processed_reviews.csv'
-data = pd.read_csv(path)
+gmaps = googlemaps.Client(key='AIzaSyDCLemo-47gI1JBA36-_YxMMRtc6ZG1qME')
 
-# Data preprocessing
-X = data.drop(data.columns[0:5], axis=1) # drop columns 0 through 5
-Y = X.dropna(axis=1, how='all') # drop empty columns
-Y.info()
-Y.describe()
-
-# Elbow method to find optimal number of clusters
-wcss = [] # creating an empty list
-s_score = [] # create empty list
-for i in range(2,20): # for every value from 2 to 19:
-    kmeans = KMeans(n_clusters=i, init='k-means++', random_state=42)
-    kmeans.fit(X)
-    prediction=kmeans.predict(X)
-    wcss.append(kmeans.inertia_)
-    s_score.append(metrics.silhouette_score(X, prediction))
-wcss
-s_score
-
-# Plot the elbow graph
-plt.figure(figsize=(12,6))
-plt.plot(range(2, 20), wcss, marker='o', c='orchid')
-plt.title('The Elbow Method')
-plt.xlabel('Number of Clusters')
-plt.ylabel('WCSS')
-plt.show()
-
-# Plot the silhouette score
-plt.plot(range(2, 20), s_score, marker='o', c='coral')
-plt.title('The Silhouette Score')
-plt.xlabel('Number of Clusters')
-plt.ylabel('Silhouette Score')
-plt.show()
-
-
-# choose 6 clusters
-kmeans = KMeans(n_clusters=6, init='k-means++', random_state=42)
-kmeans.fit(Y)
-pred = kmeans.predict(Y)
-Y['cluster'] = pred
+# reload saved kmeans data from file
+file = open('C:/Users/Johanson Onyegbula/Documents/Masters in NRES/Spring 2023/Hackathon/Fonck/Kmeans/important', 'rb')
+kmeans, Y = pickle.load(file)
+file.close()
 
 # assess cluster groups
 clust_data = Y.groupby('cluster').mean()
 
+# function to return ranked location types for user
 def recommend(userdata):
     test_user = Y.loc[0:1,]
     test_user.drop(1, inplace = True)
@@ -206,28 +26,47 @@ def recommend(userdata):
     test_user.loc[0] = userdata
     clust = kmeans.predict(test_user)
     clust = clust_data.loc[clust[0], ].sort_values(ascending=False)
-    return clust[0:3].index
+    return clust.index
 
 # ['movie_theater', 'art_gallery', 'clothing_store', 'university', 'bar', 'shopping_mall', 'museum', 'stadium', 'zoo', 'point_of_interest', 'tourist_attraction', 'park']
 
 #recommend for a user rating  who rates park as 4, and shopping mall as 5
-recommend([2.5, 2.5, 2.5, 2.5, 2.5, 5, 2.5, 2.5, 2.5, 2.5, 2.5, 4])
+recommend([3, 3, 3, 3, 3, 5, 3, 3, 3, 3, 3, 4])
 #recommend for a user rating  who rates movie theater, stadium and art gallery as 5 each
-recommend([5, 5, 2.5, 2.5, 2.5, 2.5, 2.5, 5, 2.5, 2.5, 2.5, 2.5])[0:2]
+rankings = [5, 5, 3, 3, 3, 3, 3, 5, 3, 3, 3, 3]
+suggestions = recommend(rankings)
 
-def show_itinerary(suggestions, city, radius = 40000):
+# function to plan itinerary of specific places within 25 miles radius of choice city from ranked location types
+# default is 3 places for a 1-day vacation (give input for places as 3*vacation_length)
+def show_itinerary(suggestions, city, places=3, radius = 40000):
     coords = gmaps.places(query=city)['results'][0]['geometry']['location']
     location = str(coords['lat']) + "," + str(coords['lng'])
-    # there are 3 suggested types, and the choices return multiple places for each below
-    choice1 = gmaps.places_nearby(location, radius, type=suggestions[0])
-    choice2 = gmaps.places_nearby(location, radius, type=suggestions[1])
-    choice3 = gmaps.places_nearby(location, radius, type=suggestions[2])
     
-    naddress = len(addresses) - 1
-    for i in range(naddress):
-        print(addresses[i], ':\t', end=' ')
-        dirxn = gmaps.directions(addresses[i], addresses[i+1], mode="driving", departure_time=datetime.datetime.now())
-        print(dirxn[0]['legs'][0]['duration']['text'], "drive:\t", end=' ')
-    print(addresses[naddress])
+    # the choices (for top 5 place types) return multiple places for each below
+    choices = []
+    addresses = []
+    ratedChoices = dict()
+    for i in range(5):
+        choices.append(gmaps.places_nearby(location, radius, type=suggestions[i]))
+    
+    # populate addresses of top destinations according to rating and recommended type
+    j = 0
+    while j < places:
+        for i in range(len(choices)):
+            if 'results' in choices[i] and len(choices[i]['results']) > 0:
+                choice = choices[i]['results']
+                rateKey = 'choice' + str(i)
+                if rateKey not in ratedChoices:
+                    ratings = [choice[i]['rating'] for i in range(len(choice)) if 'rating' in choice[i]]
+                    ratedChoices[rateKey] = np.argsort(np.array(ratings))
+                if len(ratedChoices[rateKey]) > 0:
+                    addresses.append([choice[ratedChoices[rateKey][0]]['vicinity'], choice[ratedChoices[rateKey][0]]['name']])
+                    ratedChoices[rateKey] = ratedChoices[rateKey][1:]
+        j += 1
+    addresses = addresses[0:places]    
 
+    return addresses
 
+city = 'San Francisco, CA'
+itinerary = show_itinerary(suggestions, city, 9)    #3-day vacation
+print(itinerary)

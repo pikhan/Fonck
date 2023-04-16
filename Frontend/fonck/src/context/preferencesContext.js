@@ -1,18 +1,44 @@
-import { createContext, useState} from "react";
+import { createContext, useState, useEffect} from "react";
 import React from "react";
 
 export const PreferencesContext = createContext();
 
 export function PreferencesProvider({children}) {
-    const [searchInput, setSearchInput] = useState({startDate: "", endDate: "", searchQuery: ""})
+    const [dates, setDates] = useState({startDate: "", endDate: ""})
     const [location, setLocation] = useState("")
     const [boundingTimes, setBoundingTimes] = useState({startTime: "", endTime: ""})
-    const [food, setFood] = useState({food1: "", food2: "", food3: ""})
-    const [attractions, setAttractions] = useState({attraction1: "", attraction2: "", attraction3: ""})
+    const [food, setFood] = useState({American: "", Asian: "", Mediterranean: "", Latin: "", European: ""})
     const [price, setPrice] = useState("")
+    const [searchSubmit, setSearchSubmit] = useState(false)
+
+    const handleSearchSubmit = () => {
+        setSearchSubmit(true)
+        console.log("submitted search btn")
+    }
+
+
+    useEffect(() => {
+        console.log("Search Input Changed", dates);
+    }, [dates]);
+
+    useEffect(() => {
+        console.log("Location Changed", location);
+    }, [location]);
+
+    useEffect(() => {
+        console.log("Bounding Times Changed", boundingTimes);
+    }, [boundingTimes]);
+
+    useEffect(() => {
+        console.log("Food Changed", food);
+    }, [food]);
+
+    useEffect(() => {
+        console.log("Price Changed", price);
+    }, [price]);
     return(
         <PreferencesContext.Provider
-            value={[searchInput, setSearchInput, location, setLocation, boundingTimes, setBoundingTimes, food, setFood, attractions, setAttractions, price, setPrice]}
+            value={[dates, setDates, location, setLocation, boundingTimes, setBoundingTimes, food, setFood, price, setPrice, handleSearchSubmit]}
         >
 
             {children}

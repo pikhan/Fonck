@@ -1,16 +1,11 @@
-.pref-and-searchResults-wrapper{
+.bg-container {
+    padding: 10%;
+}
+
+.profile-container {
     display: flex;
     background-color: rgba(253, 252, 252, .75);
     border-radius: 25px;
-}
-
-.side-column{
-    flex: 1;
-    border-right: black solid;
-}
-
-.main-column{
-    flex: 2;
 }
 
 #create-pg{
@@ -25,8 +20,6 @@
     height: 100%; 
 }
 
-
-.pg-content{
-    padding: 10%
+.profile-icon {
+    font-size: 1000px;
 }
-

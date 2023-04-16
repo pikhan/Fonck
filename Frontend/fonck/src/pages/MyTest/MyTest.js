@@ -25,7 +25,7 @@ const MyTest = () => {
       console.log(error);
     }
   }
-
+ 
   return (
     <div>
       <h1>Add Two Numbers</h1>
@@ -34,7 +34,6 @@ const MyTest = () => {
       <button onClick={handleAdd}>Add</button>
       <p>Result:</p>
       {result !== 0 && <p>{result}</p>}
-      
     </div>
   );
 };
