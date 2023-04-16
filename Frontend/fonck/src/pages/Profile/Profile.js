@@ -4,8 +4,6 @@ import Quiz from "../BuildItinerary/Quiz/Quiz";
 const Profile = () => {
     return(
         <div>Profile
-
-            <Quiz/>
         </div>
     )
 };
