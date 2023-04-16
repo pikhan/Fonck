@@ -12,7 +12,7 @@ export function PreferencesProvider({children}) {
     const [searchSubmit, setSearchSubmit] = useState(false)
 
     useEffect(() => {
-        console.log("Search Input Changed", dates);
+        console.log("Dates Changed", dates);
     }, [dates]);
 
     useEffect(() => {
@@ -61,7 +61,7 @@ export function PreferencesProvider({children}) {
     
     return(
         <PreferencesContext.Provider
-            value={[dates, setDates, location, setLocation, boundingTimes, setBoundingTimes, food, setFood, price, setPrice, handleSearchSubmit]}
+            value={[dates, setDates, location, setLocation, boundingTimes, setBoundingTimes, food, setFood, price, setPrice, handleSearchSubmit, searchSubmit]}
         >
             {children}
         </PreferencesContext.Provider>

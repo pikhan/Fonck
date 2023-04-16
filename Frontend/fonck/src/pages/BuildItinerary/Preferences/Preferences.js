@@ -51,7 +51,7 @@ const Preferences = () => {
 
     <h4 className="sectionTitle">Dates:</h4>
 
-    <LocalizationProvider dateAdapter={AdapterDayjs}>
+    {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
       <table>
         <tbody>
           <tr>
@@ -85,11 +85,50 @@ const Preferences = () => {
             </tr>
           </tbody>
         </table>
-      </LocalizationProvider>
+      </LocalizationProvider> */}
+
+<TextField
+        label="Start Date"
+        onChange={(event) =>
+          setDates((prevState) => ({
+            ...prevState,
+            startDate: event.target.value,
+          }))
+        }
+      />
+      <TextField
+        label="End Date"
+        onChange={(event) =>
+          setDates((prevState) => ({
+            ...prevState,
+            endDate: event.target.value,
+          }))
+        }
+      />
 
 
       <h4 className="sectionTitle"> Time Bounds: </h4>
-      <div className="time-pickers">
+      <TextField
+        label="Start Time"
+        onChange={(event) =>
+          setBoundingTimes((prevState) => ({
+            ...prevState,
+            startTime: event.target.value,
+          }))
+        }
+      />
+      <TextField
+        label="End Time"
+        onChange={(event) =>
+          setBoundingTimes((prevState) => ({
+            ...prevState,
+            endTime: event.target.value,
+          }))
+        }
+      />
+
+
+      {/* <div className="time-pickers">
             <LocalizationProvider dateAdapter={AdapterDateFns}>
               <Stack spacing={4} sx={{ witdh: "250px" }}>
                 <table>
@@ -126,7 +165,7 @@ const Preferences = () => {
                 </table>
               </Stack>
             </LocalizationProvider>
-          </div>
+          </div> */}
 
     </section>
 
