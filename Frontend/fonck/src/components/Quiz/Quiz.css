@@ -30,10 +30,28 @@
 
 }
 
-.submit-btn {
+/* #submit-btn {
     background: #00AFB9;
     margin: 5%;
     padding: 0px 10px;
     text-align: center;
     border-radius: 25px 0px;
+} */
+
+#submit-btn {
+    border-radius: 25px;
+    border: none;
+    background: #00AFB9;
+    color: white;
+    padding: 8px 20px;
+    font-family: 'Inter';
+    font-weight: bold;
+    font-size: 50px;    
+    box-shadow: 5px 7px 0px #0081A7;
+    margin: 30px;
+}
+
+#submit-btn:hover {
+    color: #00AFB9;
+    background: white;
 }

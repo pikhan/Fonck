@@ -15,12 +15,20 @@ export function UXProvider({ children }) {
     "zoo": 3,
   });
 
+  const [submit, setSubmit] = useState(false)
+
+  const handleSubmit = () => {
+    console.log("submitted", quizResults)
+    //Code for what you want to do when quiz is submitted
+    setSubmit(true)
+  }
+
   useEffect(() => {
     console.log("quizResultsChanged", quizResults);
 }, [quizResults]);
 
   return (
-    <UXContext.Provider value={[quizResults, setQuizResults]}>
+    <UXContext.Provider value={[quizResults, setQuizResults, submit, handleSubmit]}>
       {children}
     </UXContext.Provider>
   );
