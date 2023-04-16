@@ -18,7 +18,7 @@ const ItineraryCard = ({cardInfo, num}) => {
     const itineraryPhotos = [itinerary1, itinerary2, itinerary3]
 
     const navigateItineraryOption = () => {
-        navigate(`/ItineraryOption/${num}`, {replace: true})
+        navigate(`/ItineraryOption`, {replace: true})
     }
 
     // const navigateItineraryOption = () => {
