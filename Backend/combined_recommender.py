@@ -282,25 +282,25 @@ def generate_itinerary(dates, bounding_times, price_pref, user_food_prefs, user_
 
 
 # Main function to generate the itinerary
-def main():
-    start_date = datetime.strptime("2023-05-01", "%Y-%m-%d")
-    end_date = datetime.strptime("2023-05-05", "%Y-%m-%d")
-    bounding_times = ["7:00AM", "9:00PM"]
-    price_pref = 2
-    user_food_prefs = [1, 4, 3, 5, 1]
-    user_attraction_prefs = [2, 3, 4, 1, 3, 3, 5, 2, 1, 3, 2, 2]
-    city = "Reno"
+# def main():
+#     start_date = datetime.strptime("2023-05-01", "%Y-%m-%d")
+#     end_date = datetime.strptime("2023-05-05", "%Y-%m-%d")
+#     bounding_times = ["7:00AM", "9:00PM"]
+#     price_pref = 2
+#     user_food_prefs = [1, 4, 3, 5, 1]
+#     user_attraction_prefs = [2, 3, 4, 1, 3, 3, 5, 2, 1, 3, 2, 2]
+#     city = "Reno"
 
-    # Generate dates list
-    dates = [(start_date + timedelta(days=i)).strftime("%Y-%m-%d") for i in range((end_date - start_date).days + 1)]
+#     # Generate dates list
+#     dates = [(start_date + timedelta(days=i)).strftime("%Y-%m-%d") for i in range((end_date - start_date).days + 1)]
 
-    itinerary = generate_itinerary(dates, bounding_times, price_pref, user_food_prefs, user_attraction_prefs, city)
+#     itinerary = generate_itinerary(dates, bounding_times, price_pref, user_food_prefs, user_attraction_prefs, city)
 
-    # Save itinerary to a JSON file
-    with open("itinerary.json", "w", encoding='utf-8') as f:
-        json.dump(itinerary, f, ensure_ascii=False, indent=4)
+#     # Save itinerary to a JSON file
+#     with open("itinerary.json", "w", encoding='utf-8') as f:
+#         json.dump(itinerary, f, ensure_ascii=False, indent=4)
 
 
-if __name__ == "__main__":
-    main()
+# if __name__ == "__main__":
+#     main()
 
