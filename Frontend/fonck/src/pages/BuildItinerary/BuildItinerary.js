@@ -54,7 +54,7 @@ const BuildItinerary = () => {
           <div className="side-column">
             <Preferences />
           </div>
-          <Quiz />
+          <Quiz/>
           <div className="main-column">
             <h1>We've generated 3 itineraries for you!</h1>
             <ItineraryCards itineraries={itineraries} />
