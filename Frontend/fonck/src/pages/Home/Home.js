@@ -1,36 +1,23 @@
 import React from 'react';
-import beachImage from '../../assets/beach.png';
+import lightLogo from '../../assets/LightItineroLogo.png';
+import { Link } from 'react-router-dom';
+import "./Home.css";
 
 const Home = () => {
-    const backgroundStyle = {
-      backgroundImage: `url(${beachImage})`,
-      backgroundSize: "cover",
-      height: "100vh",
-      position: "relative",
-    };
-  
-    const textStyle = {
-      position: "absolute",
-      top: "50%",
-      left: "50%",
-      transform: "translate(-50%, -50%)",
-      textAlign: "center",
-      color: "white",
-      textShadow: "0 0 10px black",
-    };
+
   
     return (
-      <div style={backgroundStyle}>
-        <div style={textStyle}>
-          <h1 style={{ fontSize: "4rem" }}>itinero</h1>
-          <h3 style={{ fontSize: "2rem" }}>
+      <main id="home-hero-img">
+        <div className="header-content">
+          <img src={lightLogo}/>
+          <h1>
             Plan your next vacation with ease!
-          </h3>
-          <button style={{ fontSize: "1.5rem", padding: "1rem 2rem" }}>
+          </h1>
+          <Link to="/BuildItinerary"><button id="run-away-btn">
             Run away today!
-          </button>
-        </div>
-      </div>
+          </button></Link>
+          </div>
+      </main>
     );
   };
 

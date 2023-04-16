@@ -10,3 +10,20 @@
   padding: 20px;
   box-sizing: border-box;
 }
+
+#search-btn {
+  background: #F07167;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    box-shadow: 5px 7px 0px #c9574f;
+    padding: 0;
+    font-size: 1em;
+}
+
+#search-btn h1{
+  padding: 0;
+  margin: 0;
+}
+
+
