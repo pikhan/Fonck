@@ -40,11 +40,10 @@ const Quiz = () => {
       <h2>Rate your experience at each of the following:&nbsp;</h2>
       <br></br>
 
-      {Object.keys(quizResults).map((key) => {
-        // title case for key
-        key = capitalize(key);
-        return <QuizCard quizKey={key}/>;
-      })}
+
+      {quizKeys.map((item) => (
+        <QuizCard quizKey={item}/>
+      ))}
 
     </div>
     <button id="submit-btn" onClick={() => {handleSubmit(); setPopUp(false);}}>Submit</button>
