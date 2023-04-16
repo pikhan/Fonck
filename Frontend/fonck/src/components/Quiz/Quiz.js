@@ -26,7 +26,7 @@ const Quiz = () => {
 
   const [popUp, setPopUp] = useState(true);
 
-  const [quizResults] = useContext(UXContext);
+  const [quizResults, ,submit, handleSubmit] = useContext(UXContext);
 
   const quizKeys = Object.keys(quizResults)
 
@@ -50,6 +50,7 @@ const Quiz = () => {
       })}
 
     </div>
+    <button id="submit-btn" onClick={handleSubmit}>Submit</button>
     </div>
   ): "";
 };

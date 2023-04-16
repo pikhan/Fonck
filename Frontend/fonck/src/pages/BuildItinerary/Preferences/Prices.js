@@ -27,6 +27,7 @@ const Prices= () => {
         <FormControlLabel value="$" control={<Radio />} label="$" />
         <FormControlLabel value="$$" control={<Radio />} label="$$" />
         <FormControlLabel value="$$$" control={<Radio />} label="$$$" />
+        <FormControlLabel value="$$$$" control={<Radio />} label="$$$$" />
       </RadioGroup>
     </FormControl>
   );
