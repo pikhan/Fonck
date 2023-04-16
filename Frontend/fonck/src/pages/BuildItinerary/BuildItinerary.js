@@ -4,6 +4,7 @@ import "./BuildItinerary.css";
 import React from "react";
 import ItineraryCards from "../../components/itinerary-card/ItineraryCards";
 import cloudbg from "../../assets/createItinerary-bg.png";
+import PopUp from "../../components/PopUp";
 
 const itineraries = [
   {
@@ -29,7 +30,7 @@ const BuildItinerary = () => {
           <div className="side-column">
             <Preferences />
           </div>
-
+          <PopUp trigger={true}/>
           <div className="main-column">
             <h1>We've generated 3 itineraries for you!</h1>
             <ItineraryCards itineraries={itineraries} />
