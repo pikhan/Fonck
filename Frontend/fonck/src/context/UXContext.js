@@ -8,7 +8,7 @@ export function UXProvider({ children }) {
     "art gallery": 3,
     "bar": 3,
     "clothing store": 3,
-    "musuem": 3,
+    "museum": 3,
     "park": 3,
     "shopping mall": 3,
     "tourist attraction": 3,
