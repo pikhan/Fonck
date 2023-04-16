@@ -28,20 +28,29 @@ def get_price_level(place_id):
     return price_level
 
 
-def get_restaurants_from_google_maps(suggestions, city, price_pref, count=3):
+def get_restaurants_from_google_maps(suggestions, city, price_pref, count=3, recommended_places=None):
+    if recommended_places is None:
+        recommended_places = set()
+
     coords = gmaps.places(query=city)['results'][0]['geometry']['location']
     location = f"{coords['lat']},{coords['lng']}"
     radius = 40000  # meters
 
     results = []
     for suggestion in suggestions:
-        nearby_places = gmaps.places_nearby(location, radius, type=suggestion)
+        if len(results) >= count:
+            break
+
+        nearby_places = gmaps.places_nearby(location, radius, type='restaurant', keyword=suggestion)
 
         for place in nearby_places['results']:
             if len(results) >= count:
                 break
 
             place_id = place['place_id']
+            if place_id in recommended_places:  # Check if the place_id is already in the recommended_places set
+                continue
+
             price_level = get_price_level(place_id)
 
             if price_level == price_pref:
@@ -49,11 +58,13 @@ def get_restaurants_from_google_maps(suggestions, city, price_pref, count=3):
                     'name': place['name'],
                     'address': place['vicinity'],
                 })
+                recommended_places.add(place_id)  # Add the place_id to the recommended_places set
 
     return results
 
 
-def recommend_users(city, target_user_ratings, n_neighbors=3):
+
+def recommend_users(city, target_user_ratings, n_neighbors=6):
     # Load the data and the scaler
     data = pd.read_pickle('data.pkl')
     data.columns = merged_columns
@@ -83,13 +94,16 @@ def recommend_users(city, target_user_ratings, n_neighbors=3):
 
 
 
-def find_top_n_places(user_id, data, n, price_pref):
+def find_top_n_places(user_id, data, n, price_pref,recommended_places):
     user_data = data[data['user_id'] == user_id]
-    top_n_places = user_data[user_data['price'] == price_pref].nlargest(n, 'stars')
+    user_data = user_data[(user_data['price'] == price_pref) & (~user_data['business_id'].isin(recommended_places))]
+    top_n_places = user_data.nlargest(n, 'stars')
+    recommended_places.update(top_n_places['business_id'])
     return top_n_places
 
 
 def generate_itinerary(dates, bounding_times, price_pref, user_food_prefs, city):
+    recommended_places = set()
     itinerary = {}
     nearest_neighbor_user_ids = recommend_users(city, user_food_prefs)
 
@@ -99,7 +113,7 @@ def generate_itinerary(dates, bounding_times, price_pref, user_food_prefs, city)
 
         # Iterate through the nearest neighbors
         for user_id in nearest_neighbor_user_ids:
-            top_n_places = find_top_n_places(user_id, filtered_data, n_restaurants, price_pref)
+            top_n_places = find_top_n_places(user_id, filtered_data, n_restaurants, price_pref, recommended_places)
 
             if top_n_places.empty or top_n_places[top_n_places['stars'] >= 3].empty:
                 continue
@@ -122,8 +136,7 @@ def generate_itinerary(dates, bounding_times, price_pref, user_food_prefs, city)
             test_user = pd.Series(user_food_prefs, index=clust_data.columns)
             clust = kmeans.predict(test_user.values.reshape(1, -1))
             top_3_categories = clust_data.loc[clust[0], :].sort_values(ascending=False)[0:3].index
-
-            additional_restaurants = get_restaurants_from_google_maps(top_3_categories, city, price_pref, count=n_restaurants)
+            additional_restaurants = get_restaurants_from_google_maps(top_3_categories, city, price_pref, n_restaurants,recommended_places)
             itinerary[date].extend(additional_restaurants)
 
     return itinerary
@@ -144,7 +157,7 @@ def main():
     itinerary = generate_itinerary(dates, bounding_times, price_pref, user_food_prefs, city)
 
     # Save itinerary to a JSON file
-    with open("itinerary.json", "w") as f:
+    with open("itinerary.json", "w", encoding='utf-8') as f:
         json.dump(itinerary, f, ensure_ascii=False, indent=4)
 
 
