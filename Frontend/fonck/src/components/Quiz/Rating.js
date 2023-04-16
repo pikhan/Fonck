@@ -8,6 +8,9 @@ import SentimentSatisfiedIcon from '@mui/icons-material/SentimentSatisfied';
 import SentimentSatisfiedAltIcon from '@mui/icons-material/SentimentSatisfiedAltOutlined';
 import SentimentVerySatisfiedIcon from '@mui/icons-material/SentimentVerySatisfied';
 
+import { useContext, useState } from "react";
+import { UXContext } from "../../context/UXContext";
+
 const StyledRating = styled(Rating)(({ theme }) => ({
   '& .MuiRating-iconEmpty .MuiSvgIcon-root': {
     color: theme.palette.action.disabled,
@@ -46,19 +49,26 @@ IconContainer.propTypes = {
   value: PropTypes.number.isRequired,
 };
 
-export default function RadioGroupRating() {
+export default function RadioGroupRating({quizKey, saveQuizResults}) {
+
+  const [,setQuizResults] = useContext(UXContext);
   return (
+
+
+
     <StyledRating
       name="highlight-selected-only"
       defaultValue={3}
       IconContainerComponent={IconContainer}
       getLabelText={(value) => customIcons[value].label}
       highlightSelectedOnly
-      onChange={(event, newValue) => {
-        console.log(newValue);
-        // pass value to quiz.js
-        
-      }}
+
+      onChange={(event, newValue) =>
+        setQuizResults((prevState) => ({
+          ...prevState,
+          [quizKey]: newValue,
+        }))
+      }
     />
   );
 }
