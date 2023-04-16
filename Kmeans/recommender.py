@@ -1,6 +1,7 @@
 # install and import googlemaps api
 #pip install googlemaps
 import googlemaps
+import math
 gmaps = googlemaps.Client(key='AIzaSyDCLemo-47gI1JBA36-_YxMMRtc6ZG1qME')
 
 # geocode an address
@@ -217,35 +218,50 @@ recommend([3, 3, 3, 3, 3, 5, 3, 3, 3, 3, 3, 4])
 rankings = [5, 5, 3, 3, 3, 3, 3, 5, 3, 3, 3, 3]
 suggestions = recommend(rankings)
 
-# function to plan itinerary of specific places from ranked location types
+# function to plan itinerary of specific places within 25 miles radius of choice city from ranked location types
+# default is 3 places for a 1-day vacation (give input for places as 3*vacation_length)
 def show_itinerary(suggestions, city, places=3, radius = 40000):
     coords = gmaps.places(query=city)['results'][0]['geometry']['location']
     location = str(coords['lat']) + "," + str(coords['lng'])
-    # there are 3 suggested types, and the choices return multiple places for each below
+    
+    # the choices (for top 6 place types) return multiple places for each below
     choices = []
-    choices.append(gmaps.places_nearby(location, radius, type=suggestions[0]))
-    choices.append(gmaps.places_nearby(location, radius, type=suggestions[1]))
-    choices.append(gmaps.places_nearby(location, radius, type=suggestions[2]))
     addresses = []
+    ratedChoices = dict()
+    for i in range(6):
+        choices.append(gmaps.places_nearby(location, radius, type=suggestions[i]))
+    
+    # populate addresses of top destinations according to rating and recommended type
+    j = 0
+    while j < places:
+        for i in range(len(choices)):
+            if 'results' in choices[i] and len(choices[i]['results']) > 0:
+                choice = choices[i]['results']
+                rateKey = 'choice' + str(i)
+                if rateKey not in ratedChoices:
+                    ratings = [choice[i]['rating'] for i in range(len(choice)) if 'rating' in choice[i]]
+                    ratedChoices[rateKey] = np.argsort(np.array(ratings))
+                if len(ratedChoices[rateKey]) > 0:
+                    addresses.append([choice[ratedChoices[rateKey][0]]['vicinity'], choice[ratedChoices[rateKey][0]]['name']])
+                    ratedChoices[rateKey] = ratedChoices[rateKey][1:]
+        j += 1
+    addresses = addresses[0:places]
+    '''
+    # calculates driving times between consecutive places in the itinerary
+    orig_dest_pairs = []
+    naddress = len(addresses)
+    for i in range(naddress-1):
+        orig_dest_pairs.append((addresses[i][0], addresses[i+1][0]))
+
     itinerary = "From "
-    
-    for choice in choices:
-        if 'results' in choice and len(choice['results']) > 0:
-            choice = choice['results']
-            ratings = [choice[i]['rating'] for i in range(len(choice)) if 'rating' in choice[i]]
-            maxId = np.argsort(np.array(ratings))[0]
-            addresses.append([choice[maxId]['vicinity'], choice[maxId]['name']])
-    
-    naddress = len(addresses) - 1
-    for i in range(naddress):
+    for i in range(math.ceil(naddress/25)):
         itinerary += addresses[i][0] + " (" + addresses[i][1] + "):\t "
         dirxn = gmaps.directions(addresses[i][0], addresses[i+1][0], mode="driving", departure_time=datetime.datetime.now())
         itinerary += dirxn[0]['legs'][0]['duration']['text'] + " drive to:\t "
     itinerary += addresses[naddress][0] + " (" + addresses[naddress][1] + ")"
-    
-    return itinerary
+    '''
+    return addresses
 
-city = 'San Francisco'
-itinerary = show_itinerary(suggestions, city)
+city = 'San Francisco, CA'
+itinerary = show_itinerary(suggestions, city, 9)    #3-day vacation
 print(itinerary)
-
