@@ -18,8 +18,12 @@ const ItineraryCard = ({cardInfo, num}) => {
     const itineraryPhotos = [itinerary1, itinerary2, itinerary3]
 
     const navigateItineraryOption = () => {
-        navigate("/ItineraryOption")
+        navigate(`/ItineraryOption/${num}`, {replace: true})
     }
+
+    // const navigateItineraryOption = () => {
+    //     navigate("/ItineraryOption")
+    // }
 
     return(
         <div className="card-container">

@@ -19,7 +19,7 @@ function App() {
               <Route path="Profile" element={<Profile/>}/>
               {/* create new test page  */}
               <Route path="MyTest" element={<MyTest/>}/>
-              <Route path="ItineraryOption" element={<Itinerary/>}/>
+              <Route path="ItineraryOption/:itineraryID" element={<Itinerary/>}/>
             </Route>
         </Routes>
     </div>

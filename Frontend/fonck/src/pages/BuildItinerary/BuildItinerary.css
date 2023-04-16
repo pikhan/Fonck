@@ -18,8 +18,6 @@
     right: 0;
     left: 0;
     top: 0;
-    
-    /* background: url("../../assets/createItinerary-bg.png") no-repeat center center fixed; */
     background: url("../../assets/createItinerary-bg.png") white;
     background-repeat: no-repeat;
     background-blend-mode: multiply;

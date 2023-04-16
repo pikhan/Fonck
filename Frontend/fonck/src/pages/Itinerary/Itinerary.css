@@ -1,3 +1,18 @@
-.itinerary-page{
-    background-color: blue;
+#itinerary-pg{
+    position: relative;
+    right: 0;
+    left: 0;
+    top: 0;
+    background: url("../../assets/canyon.png") white;
+    background-repeat: no-repeat;
+    background-blend-mode: multiply;
+    background-size: cover;
+    height: 100%; 
+}
+
+.itinerary-title-wrapper{
+    width: 100%;
+    background-color: #FED9B7;
+    border-radius: 25px;
+
 }
