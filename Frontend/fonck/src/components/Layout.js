@@ -11,8 +11,9 @@ import { WebProvider } from "../context/WebContext";
 
 const Layout = () => {
   return (
-    <PreferencesProvider>
+    
       <UXProvider>
+        <PreferencesProvider>
         <WebProvider>
         <main>
           <nav className="nav-el">
@@ -48,8 +49,9 @@ const Layout = () => {
           <footer></footer>
         </main>
         </WebProvider>
-      </UXProvider>
+      
     </PreferencesProvider>
+    </UXProvider>
   );
 };
 

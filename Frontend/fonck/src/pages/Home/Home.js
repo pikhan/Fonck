@@ -14,7 +14,7 @@ const Home = () => {
         <div className="header-content">
           <img src={lightLogo}/>
           <h1>
-            Plan your next vacation with ease!
+            Plan your vacation with ease!
           </h1>
           <Link to="/BuildItinerary"><button onClick={setPopUp(true)} id="run-away-btn">
             Run away today!

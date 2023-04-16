@@ -14,12 +14,12 @@ gmaps = googlemaps.Client(key='AIzaSyDCLemo-47gI1JBA36-_YxMMRtc6ZG1qME')
 
 # Load the data, scaler, and the pre-trained KMeans models
 merged_columns = ['user_id','american', 'asian', 'mediterranean', 'latin', 'european','city']
-data = pd.read_pickle('data.pkl')
+data = pd.read_pickle('../Backend/data.pkl')
 data.columns = merged_columns
-scaler = pickle.load(open('scaler.pkl', 'rb'))
-kmeans = pickle.load(open("kmeansyelp.pkl", "rb"))
-clust_data = pd.read_pickle('clust_data.pkl')
-filtered_data = pd.read_csv('merged_filtered_data.csv')
+scaler = pickle.load(open('../Backend/scaler.pkl', 'rb'))
+kmeans = pickle.load(open("../Backend/kmeansyelp.pkl", "rb"))
+clust_data = pd.read_pickle('../Backend/clust_data.pkl')
+filtered_data = pd.read_csv('../Backend/merged_filtered_data.csv')
 feature_columns = ['american', 'asian', 'mediterranean', 'latin', 'european']
 
 # reload saved kmeans data from file
@@ -190,9 +190,9 @@ def get_attractions_from_google_maps(suggestions, city, count=3, recommended_pla
 
 def recommend_users(city, target_user_ratings, n_neighbors=6):
     # Load the data and the scaler
-    data = pd.read_pickle('data.pkl')
+    data = pd.read_pickle('../Backend/data.pkl')
     data.columns = merged_columns
-    scaler = pickle.load(open('scaler.pkl', 'rb'))
+    scaler = pickle.load(open('../Backend/scaler.pkl', 'rb'))
     
     # Filter the data to only include users from the desired city
     filtered_data = data[data['city'] == city]
@@ -229,6 +229,8 @@ def find_top_n_places(user_id, data, n, price_pref,recommended_places):
 def generate_itinerary(dates, bounding_times, price_pref, user_food_prefs, user_attraction_prefs, city):
     timeIndexFood=0
     timeIndexAttractions=0
+    # get first element of map
+
     start_times = compute_evenly_distributed_times(bounding_times[0],bounding_times[1],6)
     food_times = [start_times[0],start_times[2],start_times[5]]
     attraction_times = [start_times[1],start_times[3],start_times[4]]

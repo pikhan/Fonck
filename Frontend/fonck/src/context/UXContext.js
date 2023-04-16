@@ -18,6 +18,8 @@ export function UXProvider({ children }) {
     "park": 3,
   });
 
+  const [attractions, setAttractions] = useState([]);
+
   const [submit, setSubmit] = useState(false)
 
   const handleSubmit = async () => {
@@ -32,10 +34,10 @@ export function UXProvider({ children }) {
         },
         body: JSON.stringify(quizResults) 
       });
-      // get recommended activities json
+      // get recommended attractions json
       const data = await response.json();
       console.log(data);
-      // setActivities(data);
+      setAttractions(data);
   
     } catch (error) {
       console.log(error);
@@ -48,7 +50,7 @@ export function UXProvider({ children }) {
 }, [quizResults]);
 
   return (
-    <UXContext.Provider value={[quizResults, setQuizResults, submit, handleSubmit]}>
+    <UXContext.Provider value={[quizResults, setQuizResults, submit, handleSubmit, attractions]}>
       {children}
     </UXContext.Provider>
   );
