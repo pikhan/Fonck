@@ -1,0 +1,72 @@
+{
+    "2023-05-01": [
+        {
+            "name": "Zeppelin",
+            "address": "1445 S Meadows Pkwy"
+        },
+        {
+            "name": "Prost Reno Biergarten",
+            "address": "180 W Peckham Ln, Ste 1070"
+        },
+        {
+            "name": "Suri's",
+            "address": "80 Giroux St, Reno"
+        }
+    ],
+    "2023-05-02": [
+        {
+            "name": "Naan & Kabab",
+            "address": "2740 S Virginia St, Reno"
+        },
+        {
+            "name": "Asian Paradise",
+            "address": "1131 Steamboat Pkwy #820, Reno"
+        },
+        {
+            "name": "Kwok's Bistro",
+            "address": "275 West St, Reno"
+        }
+    ],
+    "2023-05-03": [
+        {
+            "name": "Soochow",
+            "address": "656 E Prater Way, Sparks"
+        },
+        {
+            "name": "Jazmine",
+            "address": "9333 Double R Blvd #1000, Reno"
+        },
+        {
+            "name": "Rim Asian Bistro",
+            "address": "2500 E 2nd St, Reno"
+        }
+    ],
+    "2023-05-04": [
+        {
+            "name": "Silver Chopsticks | Chinese & Phở Restaurant",
+            "address": "10580 N McCarran Blvd, Reno"
+        },
+        {
+            "name": "CJ Palace",
+            "address": "129 Los Altos Pkwy #119, Sparks"
+        },
+        {
+            "name": "Sabor Latin Cuisine",
+            "address": "585 E Moana Ln, Reno"
+        }
+    ],
+    "2023-05-05": [
+        {
+            "name": "La Fonda Méxican Restaurant",
+            "address": "4385 Neil Rd #109, Reno"
+        },
+        {
+            "name": "Taqueria La Salsa",
+            "address": "1946 E William St, Carson City"
+        },
+        {
+            "name": "Fiesta Méxicana",
+            "address": "10555 Stead Blvd Suite 12, Reno"
+        }
+    ]
+}
