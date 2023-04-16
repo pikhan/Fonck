@@ -1,5 +1,40 @@
 
 
 .pop-up-container {
+    z-index: 4;
+    background: #FDFCDC;
+    position: fixed;
+    /* border: solid black 5px; */
+    max-width: 870px;
+    max-height: 80vh;
+    top: 10%;
+    bottom: 10%;
+    left: 20%;
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+    flex: 1;
+    overflow-y: hidden;
+    overflow: scroll;
+    border-radius: 25px;
+    box-shadow: 10px 10px 0px #FED9B7;
 
+
+}
+.pop-up-container::-webkit-scrollbar {
+    display: none;
+}
+.cancel-btn {
+    display: flex;
+    margin-left: auto;
+
+}
+
+
+.submit-btn {
+    background: #00AFB9;
+    margin: 5%;
+    padding: 0px 10px;
+    text-align: center;
+    border-radius: 25px 0px;
 }
