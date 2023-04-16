@@ -1,0 +1,35 @@
+.pref-and-searchResults-wrapper{
+    display: flex;
+}
+
+.side-column{
+    flex: 1;
+    border-right: black solid;
+}
+
+.main-column{
+    flex: 2;
+}
+
+#create-pg{
+    position: relative;
+    right: 0;
+    left: 0;
+    top: 0;
+    
+    /* background: url("../../assets/createItinerary-bg.png") no-repeat center center fixed; */
+    background: url("../../assets/createItinerary-bg.png") white;
+    background-repeat: no-repeat;
+    background-blend-mode: multiply;
+    background-size: cover;
+    height: 100%; 
+}
+
+.pg-content{
+    padding: 10%
+}
+
+.form-wrapper{
+    background-color: rgba(253, 252, 252, .75);
+    border-radius: 25px;
+}

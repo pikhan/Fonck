@@ -1,0 +1,84 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+
+main {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+}
+
+nav {
+    position: fixed;
+    /* background: #FED9B7; */
+    background: white;
+    width: 100%;
+    padding-left: 10%;
+    padding-right: 10%;
+    box-sizing: border-box;
+    z-index: 3;
+}
+
+ul {
+    list-style-type: none;
+    display: flex;
+    flex-wrap: nowrap;
+    max-width: 1440px;
+    justify-content: center;
+    align-items: center;
+
+}
+
+li {
+    display: inline;
+    margin-right: 5%;
+
+}
+
+.logo-item {
+    margin-right: auto;
+    
+
+}
+.logo-img {
+
+    width: 30%;
+    margin-right: 80%;
+    
+}
+
+.page-container{
+    position:absolute;
+    padding: 0;
+    /* margin: 10%; */
+    left: 0;
+    right: 0;
+
+}
+
+.itinerary-item {
+
+}
+
+.itinerary-btn {
+    border-radius: 25px;
+    border: none;
+    background: #00AFB9;
+    color: white;
+    padding: 8px 20px;
+    font-family: 'Inter';
+    font-weight: bold;    
+    box-shadow: 5px 7px 0px #0081A7;
+}
+
+.itinerary-btn:hover {
+    color: #00AFB9;
+    background: white;
+}
+
+.itinerary-btn > Typography {
+    margin: 0;
+}
+
+.profile-icon {
+} 

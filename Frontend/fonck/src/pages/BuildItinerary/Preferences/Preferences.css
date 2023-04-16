@@ -1,0 +1,26 @@
+
+.sectionTitle {
+    text-align: left;
+    color: gray;
+}
+
+section {
+    border-bottom: gray solid;
+}
+
+.pref-container{
+    padding: 20px;
+    padding-left: 50px;
+}
+
+.pref-field{
+    /* display: flex; */
+    column-count: 2;
+    /* column-gap: 5px; */
+}
+
+.time-pickers {
+    display: flex;
+    flex-direction: row;
+
+}
