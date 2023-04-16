@@ -6,15 +6,19 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.neighbors import BallTree
 import googlemaps
 import json
+import warnings
+warnings.filterwarnings("ignore")
 
 gmaps = googlemaps.Client(key='AIzaSyDCLemo-47gI1JBA36-_YxMMRtc6ZG1qME')
 
 # Load the data, scaler, and the pre-trained KMeans model
+merged_columns = ['user_id','american', 'asian', 'mediterranean', 'latin', 'european','city']
 data = pd.read_pickle('data.pkl')
+data.columns = merged_columns
 scaler = pickle.load(open('scaler.pkl', 'rb'))
-kmeans = pickle.load(open("kmeans.pkl", "rb"))
+kmeans = pickle.load(open("kmeansyelp.pkl", "rb"))
 clust_data = pd.read_pickle('clust_data.pkl')
-filtered_data = pd.read_csv('filtered_data.csv')
+filtered_data = pd.read_csv('merged_filtered_data.csv')
 feature_columns = ['american', 'asian', 'mediterranean', 'latin', 'european']
 
 
@@ -44,37 +48,39 @@ def get_restaurants_from_google_maps(suggestions, city, price_pref, count=3):
                 results.append({
                     'name': place['name'],
                     'address': place['vicinity'],
-                    'place_id': place_id
                 })
 
     return results
 
 
 def recommend_users(city, target_user_ratings, n_neighbors=3):
-    # Load the data, the scaler, and the BallTree
+    # Load the data and the scaler
     data = pd.read_pickle('data.pkl')
+    data.columns = merged_columns
     scaler = pickle.load(open('scaler.pkl', 'rb'))
-    ball_tree = pickle.load(open('ball_tree.pkl', 'rb'))
-
+    
     # Filter the data to only include users from the desired city
     filtered_data = data[data['city'] == city]
-
+    
     # Check if there are any samples in the filtered data
     if filtered_data.empty:
         return "No users found in the specified city."
-
+    
     X_filtered = filtered_data[feature_columns].to_numpy()
-
-    # Scale the target user's ratings
+    
+    # Scale the filtered data and the target user's ratings
+    X_scaled = scaler.transform(X_filtered)
     target_user_scaled = scaler.transform([target_user_ratings])
 
-    # Query the BallTree for n_neighbors nearest neighbors
-    distances, indices = ball_tree.query(target_user_scaled, k=n_neighbors)
+    # Build the BallTree and query it for the n nearest neighbors
+    ball_tree = BallTree(X_scaled)
+    _, indices = ball_tree.query(target_user_scaled, k=n_neighbors)
 
-    # Get the nearest neighbors' user_ids
-    nearest_neighbor_user_ids = [filtered_data.iloc[index]['user_id'] for index in indices[0]]
+    # Get the nearest neighbors' user_ids using the index mapping from the filtered_data
+    nearest_neighbor_user_ids = [filtered_data.iloc[index].user_id for index in indices[0]]
 
     return nearest_neighbor_user_ids
+
 
 
 def find_top_n_places(user_id, data, n, price_pref):
@@ -102,7 +108,6 @@ def generate_itinerary(dates, bounding_times, price_pref, user_food_prefs, city)
                 itinerary[date].append({
                     'name': place['name'],
                     'address': place['address'],
-                    'stars': place['stars']
                 })
 
                 n_restaurants -= 1
@@ -134,7 +139,7 @@ def main():
     city = "Reno"
 
     # Generate dates list
-    dates = [(start_date + timedelta(days=i)).strftime("%Y-%m-%d") for i in range((end_date - start_date).days)]
+    dates = [(start_date + timedelta(days=i)).strftime("%Y-%m-%d") for i in range((end_date - start_date).days + 1)]
 
     itinerary = generate_itinerary(dates, bounding_times, price_pref, user_food_prefs, city)
 
