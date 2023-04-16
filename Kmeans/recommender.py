@@ -6,12 +6,11 @@ import numpy as np
 # ignore warnings
 import warnings
 warnings.filterwarnings("ignore")
-# For silhouette score
 
 gmaps = googlemaps.Client(key='AIzaSyDCLemo-47gI1JBA36-_YxMMRtc6ZG1qME')
 
 # reload saved kmeans data from file
-file = open('C:/Users/Johanson Onyegbula/Documents/Masters in NRES/Spring 2023/Hackathon/Fonck/Kmeans/important', 'rb')
+file = open('../Kmeans/important', 'rb')
 kmeans, Y = pickle.load(file)
 file.close()
 
@@ -26,12 +25,12 @@ def recommend(userdata):
     test_user.loc[0] = userdata
     clust = kmeans.predict(test_user)
     clust = clust_data.loc[clust[0], ].sort_values(ascending=False)
-    return clust.index
+    return list(clust.index)
 
 # ['movie_theater', 'art_gallery', 'clothing_store', 'university', 'bar', 'shopping_mall', 'museum', 'stadium', 'zoo', 'point_of_interest', 'tourist_attraction', 'park']
 
 #recommend for a user rating  who rates park as 4, and shopping mall as 5
-recommend([3, 3, 3, 3, 3, 5, 3, 3, 3, 3, 3, 4])
+# recommend([3, 3, 3, 3, 3, 5, 3, 3, 3, 3, 3, 4])
 #recommend for a user rating  who rates movie theater, stadium and art gallery as 5 each
 rankings = [5, 5, 3, 3, 3, 3, 3, 5, 3, 3, 3, 3]
 suggestions = recommend(rankings)
