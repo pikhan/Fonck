@@ -17,7 +17,6 @@ function App() {
               <Route index path="Home" element={<Home/>}/>       
               <Route path="BuildItinerary" element={<BuildItinerary/>}/> 
               <Route path="Profile" element={<Profile/>}/>
-              {/* create new test page  */}
               <Route path="MyTest" element={<MyTest/>}/>
               <Route path="ItineraryOption/:itineraryID" element={<Itinerary/>}/>
             </Route>
