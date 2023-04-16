@@ -4,7 +4,7 @@ import React from "react";
 export const WebContext = createContext();
 
 export function WebProvider({ children }) {
-  const [popUp, setPopUp] = useState(false)
+  const [popUp, setPopUp] = useState(false);
 
   return (
     <WebContext.Provider value={[popUp, setPopUp]}>
