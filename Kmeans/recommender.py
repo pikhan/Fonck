@@ -211,9 +211,9 @@ def recommend(userdata):
 # ['movie_theater', 'art_gallery', 'clothing_store', 'university', 'bar', 'shopping_mall', 'museum', 'stadium', 'zoo', 'point_of_interest', 'tourist_attraction', 'park']
 
 #recommend for a user rating  who rates park as 4, and shopping mall as 5
-recommend([2.5, 2.5, 2.5, 2.5, 2.5, 5, 2.5, 2.5, 2.5, 2.5, 2.5, 4])
+recommend([3, 3, 3, 3, 3, 5, 3, 3, 3, 3, 3, 4])
 #recommend for a user rating  who rates movie theater, stadium and art gallery as 5 each
-recommend([5, 5, 2.5, 2.5, 2.5, 2.5, 2.5, 5, 2.5, 2.5, 2.5, 2.5])[0:2]
+suggestions = recommend([5, 5, 3, 3, 3, 3, 3, 5, 3, 3, 3, 3])[0:2]
 
 def show_itinerary(suggestions, city, radius = 40000):
     coords = gmaps.places(query=city)['results'][0]['geometry']['location']
@@ -222,12 +222,27 @@ def show_itinerary(suggestions, city, radius = 40000):
     choice1 = gmaps.places_nearby(location, radius, type=suggestions[0])
     choice2 = gmaps.places_nearby(location, radius, type=suggestions[1])
     choice3 = gmaps.places_nearby(location, radius, type=suggestions[2])
+    addresses = []
+    itinerary = "From "
+    
+    for choice in (choice1, choice2, choice3):
+        if 'results' in choice and len(choice['results']) > 0:
+            choice = choice['results']
+            ratings = [choice[i]['rating'] for i in range(len(choice)) if 'rating' in choice[i]]
+            maxId = max(ratings)
+            maxId = ratings.index(maxId)
+            addresses.append([choice[maxId]['vicinity'], choice[maxId]['name']])
     
     naddress = len(addresses) - 1
     for i in range(naddress):
-        print(addresses[i], ':\t', end=' ')
-        dirxn = gmaps.directions(addresses[i], addresses[i+1], mode="driving", departure_time=datetime.datetime.now())
-        print(dirxn[0]['legs'][0]['duration']['text'], "drive:\t", end=' ')
-    print(addresses[naddress])
+        itinerary += addresses[i][0] + " (" + addresses[i][1] + "):\t "
+        dirxn = gmaps.directions(addresses[i][0], addresses[i+1][0], mode="driving", departure_time=datetime.datetime.now())
+        itinerary += dirxn[0]['legs'][0]['duration']['text'] + " drive to:\t "
+    itinerary += addresses[naddress][0] + " (" + addresses[naddress][1] + ")"
+    
+    return itinerary
 
+city = 'San Francisco'
+itinerary = show_itinerary(suggestions, city)
+print(itinerary)
 
