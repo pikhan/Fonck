@@ -282,7 +282,7 @@ def generate_itinerary(dates, bounding_times, price_pref, user_food_prefs, user_
         js_content = f'const myData = {itinerary};'
 
         # Write the content to a new JS file
-        with open('../Frontend/fonck/src/pages/Itinerary/itineraryData.js', 'w',encoding='utf-8') as js_file:
+        with open('../Frontend/fonck/public/itineraryData.js', 'w',encoding='utf-8') as js_file:
             js_file.write(js_content)
 
     return itinerary
