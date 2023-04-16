@@ -28,10 +28,27 @@ export function PreferencesProvider({children}) {
 
     useEffect(() => {
         console.log("Food Changed", food);
+
     }, [food]);
 
     useEffect(() => {
         console.log("Price Changed", price);
+        if(price = '$'){
+            price = 1;
+        }
+        // $$ = 2
+        if(price = '$$'){
+            price = 2;
+        }
+        // $$$ = 3
+        if(price = '$$$'){
+            price = 3;
+        }
+        // $$$$ = 4
+        if(price = '$$$$'){
+            price = 4;
+        }
+
     }, [price]);
 
     
