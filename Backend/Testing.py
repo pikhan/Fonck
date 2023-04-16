@@ -356,4 +356,4 @@ target_user_id = nearest_neighbor_user_id
 # Find the top 3 highest-rated places for the given user_id at runtime
 top_3_places = find_top_3_places(target_user_id, filtered_data)
 print("The user_id with the closest preference in", city, "is:", nearest_neighbor_user_id)
-print("They recommend: ", top_3_places['name'])
+print("They recommend: ", top_3_places)
