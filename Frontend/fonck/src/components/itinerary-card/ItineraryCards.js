@@ -14,8 +14,7 @@ const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 const ItineraryCard = ({cardInfo, num}) => {
 
     const itineraryPhotos = [itinerary1, itinerary2, itinerary3]
-    const cardImgPath = `../../assets/itinerary${num}.png`;
-    console.log(cardImgPath)
+
     return(
         <div className="card-container">
             <img src={itineraryPhotos[num-1]}/>
