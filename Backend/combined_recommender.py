@@ -279,6 +279,12 @@ def generate_itinerary(dates, bounding_times, price_pref, user_food_prefs, user_
         timeIndexFood = 0
         timeIndexAttractions = 0
 
+        js_content = f'const myData = {itinerary};'
+
+        # Write the content to a new JS file
+        with open('../Frontend/fonck/src/pages/Itinerary/itineraryData.js', 'w',encoding='utf-8') as js_file:
+            js_file.write(js_content)
+
     return itinerary
 
 
@@ -334,13 +340,13 @@ def main():
     # # Save the reshaped DataFrame to an Excel file
     # reshaped_df.to_excel('itinerary.xlsx', index=False, engine='openpyxl')
     # Create the JavaScript content
-    js_content = f'const myData = {itinerary};'
+#     js_content = f'const myData = {itinerary};'
 
-# Write the content to a new JS file
-    with open('../Frontend/fonck/src/pages/Itinerary/itineraryData.js', 'w',encoding='utf-8') as js_file:
-        js_file.write(js_content)
+# # Write the content to a new JS file
+#     with open('../Frontend/fonck/src/pages/Itinerary/itineraryData.js', 'w',encoding='utf-8') as js_file:
+#         js_file.write(js_content)
 
 
-if __name__ == "__main__":
-    main()
+# if __name__ == "__main__":
+#     main()
 
