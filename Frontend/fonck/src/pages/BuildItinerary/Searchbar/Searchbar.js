@@ -11,7 +11,7 @@ const today = dayjs();
 const tomorrow = dayjs().add(1, "day");
 
 const Searchbar = () => {
-  const [searchInput, setSearchInput] = useContext(PreferencesContext);
+  const [dates, setDates, location, setLocation] = useContext(PreferencesContext);
 
   return (
     <div className="Searchbar-wrapper">
@@ -25,6 +25,13 @@ const Searchbar = () => {
           InputProps={{
             style: { backgroundColor: "#FFFFFF" },
           }}
+          onChange={(newValue) =>
+            setDates((prevState) => ({
+              ...prevState,
+              startDate: newValue,
+            }))}
+
+          
         />
         <DateField
           className="Searchbar-item"
@@ -34,6 +41,14 @@ const Searchbar = () => {
           InputProps={{
             style: { backgroundColor: "#FFFFFF" },
           }}
+
+          onChange={(newValue) =>
+            setDates((prevState) => ({
+              ...prevState,
+              endDate: newValue,
+            }))
+          }
+
         />
       </LocalizationProvider>
       <TextField
@@ -42,6 +57,7 @@ const Searchbar = () => {
           style: { backgroundColor: "#FFFFFF" },
         }}
         variant="filled"
+        onChange={(event) => setLocation(event.target.value)}
       />
 
       <button className="Searchbar-item" id="search-btn">

@@ -24,6 +24,14 @@
 #search-btn h1{
   padding: 0;
   margin: 0;
+  /* color: white; */
 }
 
+
+
+#search-btn:hover {
+  background: white;
+    color: #F07167;
+
+}
 
