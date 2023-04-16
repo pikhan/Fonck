@@ -7,11 +7,13 @@ import logo from "../assets/ItineroLogo.png";
 import { PreferencesProvider } from "../context/preferencesContext";
 import { Typography } from "@mui/material";
 import { UXProvider } from "../context/UXContext";
+import { WebProvider } from "../context/WebContext";
 
 const Layout = () => {
   return (
     <PreferencesProvider>
       <UXProvider>
+        <WebProvider>
         <main>
           <nav className="nav-el">
             <ul>
@@ -45,6 +47,7 @@ const Layout = () => {
 
           <footer></footer>
         </main>
+        </WebProvider>
       </UXProvider>
     </PreferencesProvider>
   );
