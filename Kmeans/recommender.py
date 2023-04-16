@@ -42,11 +42,11 @@ def show_itinerary(suggestions, city, places=3, radius = 40000):
     coords = gmaps.places(query=city)['results'][0]['geometry']['location']
     location = str(coords['lat']) + "," + str(coords['lng'])
     
-    # the choices (for top 6 place types) return multiple places for each below
+    # the choices (for top 5 place types) return multiple places for each below
     choices = []
     addresses = []
     ratedChoices = dict()
-    for i in range(6):
+    for i in range(5):
         choices.append(gmaps.places_nearby(location, radius, type=suggestions[i]))
     
     # populate addresses of top destinations according to rating and recommended type
