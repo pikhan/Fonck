@@ -2,9 +2,8 @@ import React from "react";
 import { useContext, useState } from "react";
 import { UXContext } from "../../context/UXContext";
 import RadioGroupRating from "./Rating";
-
+import CloseIcon from '@mui/icons-material/Close';
 import "./Quiz.css";
-import CancelIcon from "@mui/icons-material/Cancel";
 import { WebContext } from "../../context/WebContext";
 
 const QuizCard = ({ quizKey }) => {
@@ -25,11 +24,7 @@ const Quiz = () => {
 
   return popUp ? (
     <div className="pop-up-container">
-      <button className="cancel-btn" onClick={() => setPopUp(false)}>
-        {" "}
-        <CancelIcon />{" "}
-      </button>
-
+        <CloseIcon className="cancel-btn" onClick={() => setPopUp(false)}/>
       <div>
         <h1>Hello! You seem new here...Please let tell us more about you!</h1>
         <h2>Rate your experience at each of the following:&nbsp;</h2>
