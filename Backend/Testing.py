@@ -252,6 +252,8 @@ from sklearn import metrics
 
 kmeans = KMeans(n_clusters=20, init='k-means++', random_state=42)
 ourFit=kmeans.fit(Y)
+# Save the KMeans model to a file
+pickle.dump(kmeans, open("kmeansyelp.pkl", "wb"))
 #prediction=kmeans.predict(Y)
 #print(metrics.silhouette_score(Y, prediction))
 
