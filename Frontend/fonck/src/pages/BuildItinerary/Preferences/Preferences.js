@@ -23,10 +23,6 @@ const Preferences = () => {
             <h3>Preferences</h3>
             <section>
                 <div className="pref-field">
-                    <h4 className="sectionTitle">Location:</h4>
-                    <TextField id="outlined-basic" label="Location" variant="standard" />
-                </div>
-                <div className="pref-field">
                     <h4 className="sectionTitle">Price:</h4>
                     <Prices/>
                 </div>
