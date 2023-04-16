@@ -1,0 +1,72 @@
+{
+    "2023-05-01": [
+        {
+            "name": "Zeppelin",
+            "address": "1445 S Meadows Pkwy"
+        },
+        {
+            "name": "Prost Reno Biergarten",
+            "address": "180 W Peckham Ln, Ste 1070"
+        },
+        {
+            "name": "Walgreens",
+            "address": "750 North Virginia Street, Reno"
+        }
+    ],
+    "2023-05-02": [
+        {
+            "name": "Zeppelin",
+            "address": "1445 S Meadows Pkwy"
+        },
+        {
+            "name": "Prost Reno Biergarten",
+            "address": "180 W Peckham Ln, Ste 1070"
+        },
+        {
+            "name": "Walgreens",
+            "address": "750 North Virginia Street, Reno"
+        }
+    ],
+    "2023-05-03": [
+        {
+            "name": "Zeppelin",
+            "address": "1445 S Meadows Pkwy"
+        },
+        {
+            "name": "Prost Reno Biergarten",
+            "address": "180 W Peckham Ln, Ste 1070"
+        },
+        {
+            "name": "Walgreens",
+            "address": "750 North Virginia Street, Reno"
+        }
+    ],
+    "2023-05-04": [
+        {
+            "name": "Zeppelin",
+            "address": "1445 S Meadows Pkwy"
+        },
+        {
+            "name": "Prost Reno Biergarten",
+            "address": "180 W Peckham Ln, Ste 1070"
+        },
+        {
+            "name": "Walgreens",
+            "address": "750 North Virginia Street, Reno"
+        }
+    ],
+    "2023-05-05": [
+        {
+            "name": "Zeppelin",
+            "address": "1445 S Meadows Pkwy"
+        },
+        {
+            "name": "Prost Reno Biergarten",
+            "address": "180 W Peckham Ln, Ste 1070"
+        },
+        {
+            "name": "Walgreens",
+            "address": "750 North Virginia Street, Reno"
+        }
+    ]
+}
