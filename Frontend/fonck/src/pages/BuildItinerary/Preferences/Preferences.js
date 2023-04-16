@@ -43,6 +43,7 @@ const Preferences = () => {
     <h4 className="sectionTitle">Location:</h4>
 
     <TextField
+        fullWidth="true"
         label="Location"
         // variant="standard"
         onChange={(event) => setLocation(event.target.value)}
@@ -50,42 +51,40 @@ const Preferences = () => {
 
     <h4 className="sectionTitle">Dates:</h4>
 
-
     <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <DateField
-          className="Searchbar-item"
-          defaultValue={today}
-          minDate={tomorrow}
-          label="Start Date"
-          variant="filled"
-          InputProps={{
-            style: { backgroundColor: "#FFFFFF" },
-          }}
-          onChange={(newValue) =>
-            setDates((prevState) => ({
-              ...prevState,
-              startDate: newValue,
-            }))}
+      <table>
+        <tbody>
+          <tr>
+            <td>
+                <DateField
+                  className="Searchbar-item"
+                  defaultValue={today}
+                  minDate={tomorrow}
+                  label="Start Date"
+                  onChange={(newValue) =>
+                    setDates((prevState) => ({
+                      ...prevState,
+                      startDate: newValue,
+                    }))}
+                />
+              </td>
+              <td>
+                <DateField
+                  className="Searchbar-item"
+                  minDate={tomorrow}
+                  label="End Date"
+                  onChange={(newValue) =>
+                    setDates((prevState) => ({
+                      ...prevState,
+                      endDate: newValue,
+                    }))
+                  }
 
-          
-        />
-        <DateField
-          className="Searchbar-item"
-          minDate={tomorrow}
-          label="End Date"
-          variant="filled"
-          InputProps={{
-            style: { backgroundColor: "#FFFFFF" },
-          }}
-
-          onChange={(newValue) =>
-            setDates((prevState) => ({
-              ...prevState,
-              endDate: newValue,
-            }))
-          }
-
-        />
+                />
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </LocalizationProvider>
 
 
